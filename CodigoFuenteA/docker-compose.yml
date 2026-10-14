@@ -49,7 +49,7 @@ services:
       context: ./FRONTEND
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: "http://localhost:${PORT_BACKEND:-4450}"
+        VITE_API_URL: "https://<nombre>-4450.app.github.dev"
     container_name: atlas-frontend
     hostname: atlas-web
     ports:

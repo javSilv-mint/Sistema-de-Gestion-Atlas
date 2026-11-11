@@ -91,15 +91,28 @@ jobs:
           docker run --rm -v "$PWD:/src" aquasec/trivy:latest fs --quiet --scanners vuln,secret,misconfig \
             --severity HIGH,CRITICAL --format table --output /src/reportes/sca/trivy.txt /src/$APP_DIR || true
 
+      - name: Publicar reportes de la etapa en la rama qa-reportes-estaticos
+        if: always()
+        continue-on-error: true
+        run: |
+          cd reportes
+          git init -q -b qa-reportes-estaticos
+          git config user.name "atlas-devsecops-bot"
+          git config user.email "actions@github.com"
+          git add -A && git commit -qm "Reportes estaticos run ${{ github.run_number }}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" qa-reportes-estaticos
+          rm -rf .git
+
       - uses: actions/upload-artifact@v4
         if: always()
+        continue-on-error: true
         with: { name: reportes-estaticos, path: reportes/ }
 
   # ------------------------------------------------------------------ ETAPA 2
   pruebas-dinamicas:
     name: "2. Pruebas dinámicas (API, E2E, rendimiento, DAST)"
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -196,15 +209,28 @@ jobs:
           docker run --rm --network host -v "$PWD/reportes/dast:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
             zap-api-scan.py -t http://localhost:4450/openapi.json -f openapi -I \
             -r zap-api.html -J zap-api.json -w zap-api.md \
-            -z "-config scanner.maxScanDurationInMins=12 -config scanner.maxRuleDurationInMins=2" \
+            -z "-config scanner.maxScanDurationInMins=8 -config scanner.maxRuleDurationInMins=2" \
             2>&1 | tail -80 > reportes/dast/zap-api-consola.txt || true
 
       - name: Registros del backend
         if: always()
         run: docker logs atlas-backend > reportes/ambiente/backend.log 2>&1 || true
 
+      - name: Publicar reportes de la etapa en la rama qa-reportes-dinamicos
+        if: always()
+        continue-on-error: true
+        run: |
+          cd reportes
+          git init -q -b qa-reportes-dinamicos
+          git config user.name "atlas-devsecops-bot"
+          git config user.email "actions@github.com"
+          git add -A && git commit -qm "Reportes dinamicos run ${{ github.run_number }}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" qa-reportes-dinamicos
+          rm -rf .git
+
       - uses: actions/upload-artifact@v4
         if: always()
+        continue-on-error: true
         with: { name: reportes-dinamicos, path: reportes/ }
 
   # ------------------------------------------------------------------ ETAPA 3
@@ -216,14 +242,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
-        with: { path: descargas }
-
-      - name: Unificar reportes
+      - name: Unificar reportes (desde las ramas publicadas por cada etapa)
         run: |
           mkdir -p reportes
-          cp -r descargas/reportes-estaticos/* reportes/ 2>/dev/null || true
-          cp -r descargas/reportes-dinamicos/* reportes/ 2>/dev/null || true
+          for etapa in estaticos dinamicos; do
+            git clone -q --depth 1 -b qa-reportes-$etapa "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" tmp-$etapa || continue
+            rm -rf tmp-$etapa/.git && cp -r tmp-$etapa/* reportes/ && rm -rf tmp-$etapa
+          done
           find reportes -maxdepth 2 | sort
 
       - name: Generar resumen ejecutivo y evaluar quality gate

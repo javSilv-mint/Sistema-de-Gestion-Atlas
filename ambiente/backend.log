@@ -1,0 +1,6 @@
+Atlas API escuchando en puerto 4000
+[0mGET / [32m200[0m 2.220 ms - 30[0m
+[0mGET / [32m200[0m 0.802 ms - 30[0m
+[0mPOST /autenticacion/login [32m200[0m 4081.392 ms - 245[0m
+[0mPOST /autenticacion/login [32m200[0m 4006.274 ms - 247[0m
+[0mPOST /empresas [32m201[0m 4.538 ms - 329[0m

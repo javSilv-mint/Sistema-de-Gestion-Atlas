@@ -1,0 +1,19 @@
+newman
+
+Atlas EP5 - Pruebas automatizadas funcionales y de seguridad
+
+Folder 00 Preparación de datos
+Sub-folder PREP Login administrador (admin)
+  POST http://localhost:4450/autenticacion/login [200 OK, 513B, 4.1s]
+  Pass  Responde HTTP 200
+
+Sub-folder PREP Login editor (editor)
+  POST http://localhost:4450/autenticacion/login [200 OK, 515B, 4s]
+  Pass  Responde HTTP 200
+
+Sub-folder PREP Registrar empresa B (segundo tenant)
+  POST http://localhost:4450/empresas [201 Created, 603B, 7ms]
+  Pass  Responde HTTP 201
+
+Sub-folder PREP Login usuario empresa B
+  POST http://localhost:4450/autenticacion/login 

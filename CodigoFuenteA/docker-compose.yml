@@ -49,7 +49,7 @@ services:
       context: ./FRONTEND
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: "https://<nombre>-4450.app.github.dev"
+           VITE_API_URL: "https://orange-zebra-694xj46vpr4wf59j6-4450.app.github.dev"
     container_name: atlas-frontend
     hostname: atlas-web
     ports:

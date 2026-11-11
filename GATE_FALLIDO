@@ -1,0 +1,9 @@
+SAST semgrep-owasp: 1 hallazgos de severidad ERROR
+SAST semgrep-atlas: 12 hallazgos de severidad ERROR
+Gitleaks: 1 secretos en el repositorio
+npm audit backend: 1 críticas / 4 altas
+npm audit frontend: 0 críticas / 4 altas
+Newman: 37 aserciones fallidas
+k6: umbral http_req_duration{tipo:crud} p(95)<300 no cumplido
+k6: umbral t_listar_clientes p(95)<300 no cumplido
+ZAP zap-api: 1 alertas de riesgo alto

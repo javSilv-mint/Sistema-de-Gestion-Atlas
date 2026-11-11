@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Atlas EP5 - Pruebas automatizadas funcionales y de seguridad" tests="51" time="60.384">
+  <testsuite name="00 Preparación de datos / PREP Login administrador (admin)" id="fc1d079b-f4cb-4794-86b6-8f18a0fa8737" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.095">
+    <testcase name="Responde HTTP 200" time="4.095" classname="00PreparacionDeDatosPrepLoginAdministradorAdmin"/>
+  </testsuite>
+  <testsuite name="00 Preparación de datos / PREP Login editor (editor)" id="a104d0d6-29bb-4ab4-8dc3-2d487cf44183" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.011">
+    <testcase name="Responde HTTP 200" time="4.011" classname="00PreparacionDeDatosPrepLoginEditorEditor"/>
+  </testsuite>
+  <testsuite name="00 Preparación de datos / PREP Registrar empresa B (segundo tenant)" id="1c55a7b7-7e94-4598-85fe-50cb26fec422" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="0.008">
+    <testcase name="Responde HTTP 201" time="0.008" classname="00PreparacionDeDatosPrepRegistrarEmpresaBSegundoTenant"/>
+  </testsuite>
+  <testsuite name="00 Preparación de datos / PREP Login usuario empresa B" id="e1428bbb-3925-4484-8a23-6a22f0040635" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.007">
+    <testcase name="Responde HTTP 200" time="4.007" classname="00PreparacionDeDatosPrepLoginUsuarioEmpresaB"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-01] Inicio de sesión exitoso entrega JWT válido" id="3747a791-381c-40d8-9d8a-231b7acfdc68" timestamp="2026-11-11T21:10:08.340Z" tests="3" failures="0" errors="0" time="4.009">
+    <testcase name="Responde HTTP 200" time="4.009" classname="01PruebasFuncionalesApiCp01InicioDeSesionExitosoEntregaJwtValido"/>
+    <testcase name="La respuesta contiene un JWT con 3 segmentos" time="4.009" classname="01PruebasFuncionalesApiCp01InicioDeSesionExitosoEntregaJwtValido"/>
+    <testcase name="El JWT incluye empresaId y expira en ≤ 2 h" time="4.009" classname="01PruebasFuncionalesApiCp01InicioDeSesionExitosoEntregaJwtValido"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-02] Credenciales inválidas son rechazadas" id="fed0b431-38ea-4049-a332-6808b26fc861" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="0" errors="0" time="4.007">
+    <testcase name="Responde HTTP 401" time="4.007" classname="01PruebasFuncionalesApiCp02CredencialesInvalidasSonRechazadas"/>
+    <testcase name="No entrega token" time="4.007" classname="01PruebasFuncionalesApiCp02CredencialesInvalidasSonRechazadas"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-10] Crear cliente con datos válidos" id="a75c7095-d16c-4ddb-8f65-d5aa98e0e1a2" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="0.007">
+    <testcase name="Responde HTTP 201" time="0.007" classname="01PruebasFuncionalesApiCp10CrearClienteConDatosValidos"/>
+    <testcase name="Cliente queda asociado a la empresa del token (RB-2)" time="0.007" classname="01PruebasFuncionalesApiCp10CrearClienteConDatosValidos">
+      <failure type="AssertionFailure" message="expected '1' to deeply equal 1">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-10] Crear cliente con datos válidos.]]>
+        <![CDATA[Test description: Cliente queda asociado a la empresa del token (RB-2).]]>
+        <![CDATA[Error message: expected '1' to deeply equal 1.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '1' to deeply equal 1
+   at Object.eval sandbox-script.js:2:7).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos" id="9e33dd9a-431b-4b8d-b395-5f62dddeaa16" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.006">
+    <testcase name="Responde HTTP 400 con detalle de validación (RF-4.3)" time="0.006" classname="01PruebasFuncionalesApiCp10BRechazarClienteConCorreoRutYTelefonoInvalidos">
+      <failure type="AssertionFailure" message="expected response to have status code 400 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos.]]>
+        <![CDATA[Test description: Responde HTTP 400 con detalle de validación (RF-4.3).]]>
+        <![CDATA[Error message: expected response to have status code 400 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 400 but got 201
+   at Object.eval sandbox-script.js:1:8).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-11] Listar clientes de la empresa" id="03e106e3-e7c3-4d55-92cb-87485393d03f" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.009">
+    <testcase name="Responde HTTP 200" time="4.009" classname="01PruebasFuncionalesApiCp11ListarClientesDeLaEmpresa"/>
+    <testcase name="Devuelve arreglo solo con clientes de la empresa 1" time="4.009" classname="01PruebasFuncionalesApiCp11ListarClientesDeLaEmpresa">
+      <failure type="AssertionFailure" message="expected '1' to deeply equal 1">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-11] Listar clientes de la empresa.]]>
+        <![CDATA[Test description: Devuelve arreglo solo con clientes de la empresa 1.]]>
+        <![CDATA[Error message: expected '1' to deeply equal 1.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '1' to deeply equal 1
+   at Object.eval sandbox-script.js:2:9).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-11b] Buscar cliente por nombre" id="17187d42-6ddc-42a6-9e91-94e53b2ac57e" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="0" errors="0" time="0.007">
+    <testcase name="Responde HTTP 200" time="0.007" classname="01PruebasFuncionalesApiCp11BBuscarClientePorNombre"/>
+    <testcase name="Encuentra el cliente creado" time="0.007" classname="01PruebasFuncionalesApiCp11BBuscarClientePorNombre"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-14] Crear contrato con documento PDF asociado a un cliente" id="dc3b21bc-d6ca-4bad-82c5-fc199d3a95ee" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="0.016">
+    <testcase name="Responde HTTP 201" time="0.016" classname="01PruebasFuncionalesApiCp14CrearContratoConDocumentoPdfAsociadoAUnCliente"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-14b] Rechazar contrato con fecha de término anterior a la de inicio" id="9af4a418-6fab-4769-82d3-2f3c4d353e38" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.005">
+    <testcase name="Responde HTTP 400 por rango de fechas inválido" time="0.005" classname="01PruebasFuncionalesApiCp14BRechazarContratoConFechaDeTerminoAnteriorALaDeInicio">
+      <failure type="AssertionFailure" message="expected response to have status code 400 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-14b] Rechazar contrato con fecha de término anterior a la de inicio.]]>
+        <![CDATA[Test description: Responde HTTP 400 por rango de fechas inválido.]]>
+        <![CDATA[Error message: expected response to have status code 400 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 400 but got 201
+   at Object.eval sandbox-script.js:1:12).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-16] Descargar documento del contrato (usuario autorizado)" id="b7d318c3-2703-4f1b-a23c-ff05b6cd3ab2" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="0" errors="0" time="0.006">
+    <testcase name="Responde HTTP 200" time="0.006" classname="01PruebasFuncionalesApiCp16DescargarDocumentoDelContratoUsuarioAutorizado"/>
+    <testcase name="Content-Type application/pdf" time="0.006" classname="01PruebasFuncionalesApiCp16DescargarDocumentoDelContratoUsuarioAutorizado"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-17] Listar contratos con estado calculado" id="07baa790-f6ee-4275-abdd-a8c5cc868856" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.007">
+    <testcase name="Responde HTTP 200" time="4.007" classname="01PruebasFuncionalesApiCp17ListarContratosConEstadoCalculado"/>
+    <testcase name="Cada contrato informa su estado (activo / por vencer / expirado)" time="4.007" classname="01PruebasFuncionalesApiCp17ListarContratosConEstadoCalculado">
+      <failure type="AssertionFailure" message="contrato 4 sin campo estado: expected undefined to exist">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-17] Listar contratos con estado calculado.]]>
+        <![CDATA[Test description: Cada contrato informa su estado (activo / por vencer / expirado).]]>
+        <![CDATA[Error message: contrato 4 sin campo estado: expected undefined to exist.]]>
+        <![CDATA[Stacktrace: AssertionError: contrato 4 sin campo estado: expected undefined to exist
+   at Object.eval sandbox-script.js:2:14).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-12] Crear cliente desechable para prueba de eliminación" id="c61ed78a-f1d7-4257-81d4-9362f55020a1" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="0.005">
+    <testcase name="Responde HTTP 201" time="0.005" classname="01PruebasFuncionalesApiCp12CrearClienteDesechableParaPruebaDeEliminacion"/>
+  </testsuite>
+  <testsuite name="01 Pruebas funcionales (API) / [CP-12] Eliminar cliente (debe ser eliminación lógica)" id="94bed767-90fa-4043-91f3-e11d93616635" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="0.005">
+    <testcase name="Responde 200/204" time="0.005" classname="01PruebasFuncionalesApiCp12EliminarClienteDebeSerEliminacionLogica"/>
+    <testcase name="La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico" time="0.005" classname="01PruebasFuncionalesApiCp12EliminarClienteDebeSerEliminacionLogica">
+      <failure type="AssertionFailure" message="expected '{&quot;deleted&quot;:true}' to match /eliminado|inactivo|deleted_at|estado/i">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 01 Pruebas funcionales (API) / [CP-12] Eliminar cliente (debe ser eliminación lógica).]]>
+        <![CDATA[Test description: La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico.]]>
+        <![CDATA[Error message: expected '{"deleted":true}' to match /eliminado|inactivo|deleted_at|estado/i.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '{"deleted":true}' to match /eliminado|inactivo|deleted_at|estado/i
+   at Object.eval sandbox-script.js:2:16).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [SEC-AUT-01] Inyección SQL en login es rechazada" id="96e7a1e1-4327-44c1-9c49-b3f44cb736b8" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.008">
+    <testcase name="Responde 401 (consultas parametrizadas)" time="4.008" classname="02SeguridadAutenticacionYSesionOwaspA07A02SecAut01InyeccionSqlEnLoginEsRechazada"/>
+  </testsuite>
+  <testsuite name="02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [SEC-AUT-02] JWT con algoritmo 'none' es rechazado" id="28dee544-c5f2-40c8-ae1f-3b9231ed8b0a" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.007">
+    <testcase name="Responde 401 ante token sin firma" time="4.007" classname="02SeguridadAutenticacionYSesionOwaspA07A02SecAut02JwtConAlgoritmoNoneEsRechazado"/>
+  </testsuite>
+  <testsuite name="02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [SEC-AUT-03] JWT forjado con secreto por defecto es rechazado" id="600223b2-9100-4802-95ff-e8c25b766110" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="4.009">
+    <testcase name="Responde 401 (el secreto JWT no debe ser el valor por defecto público)" time="4.009" classname="02SeguridadAutenticacionYSesionOwaspA07A02SecAut03JwtForjadoConSecretoPorDefectoEsRechazado">
+      <failure type="AssertionFailure" message="expected response to have status code 401 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [SEC-AUT-03] JWT forjado con secreto por defecto es rechazado.]]>
+        <![CDATA[Test description: Responde 401 (el secreto JWT no debe ser el valor por defecto público).]]>
+        <![CDATA[Error message: expected response to have status code 401 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 401 but got 200
+   at Object.eval sandbox-script.js:1:19).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-05] Registro con contraseña débil es rechazado" id="c7e10ad8-2414-483d-b2b7-69c64e5a8917" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.004">
+    <testcase name="Responde 400 por no cumplir política de contraseñas (NFR-SEG-2)" time="0.004" classname="02SeguridadAutenticacionYSesionOwaspA07A02Cp05RegistroConContrasenaDebilEsRechazado">
+      <failure type="AssertionFailure" message="expected response to have status code 400 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-05] Registro con contraseña débil es rechazado.]]>
+        <![CDATA[Test description: Responde 400 por no cumplir política de contraseñas (NFR-SEG-2).]]>
+        <![CDATA[Error message: expected response to have status code 400 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 400 but got 201
+   at Object.eval sandbox-script.js:1:20).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-03] Existe endpoint de cierre de sesión con revocación del token" id="91f607fc-fc63-488a-b9e2-84d7f930cc48" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Responde 200/204 (logout implementado en servidor)" time="0.003" classname="02SeguridadAutenticacionYSesionOwaspA07A02Cp03ExisteEndpointDeCierreDeSesionConRevocacionDelToken">
+      <failure type="AssertionFailure" message="expected 404 to be one of [ 200, 204 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-03] Existe endpoint de cierre de sesión con revocación del token.]]>
+        <![CDATA[Test description: Responde 200/204 (logout implementado en servidor).]]>
+        <![CDATA[Error message: expected 404 to be one of [ 200, 204 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 404 to be one of [ 200, 204 ]
+   at Object.eval sandbox-script.js:1:21).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20a] GET /contratos/:id sin token" id="2b5159c1-0719-493b-97a9-7dc73e44b242" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Sin token responde 401/403" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20AGetContratosIdSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20a] GET /contratos/:id sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:22).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20b] GET /contratos/:id/file sin token (descarga de documento)" id="66288b25-656a-472c-843b-106a3b104a85" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Sin token responde 401/403" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20BGetContratosIdFileSinTokenDescargaDeDocumento">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20b] GET /contratos/:id/file sin token (descarga de documento).]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:23).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20c] GET /usuarios/:id sin token" id="ae839eb0-1f1c-4309-95d6-0e62f3e7a32c" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Sin token responde 401/403" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20CGetUsuariosIdSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20c] GET /usuarios/:id sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:24).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20d] GET /empresas sin token" id="f9ad6125-0998-4cb8-b436-dc5d28ee8ef9" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Sin token responde 401/403" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20DGetEmpresasSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20d] GET /empresas sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:25).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20e] GET /roles sin token" id="6c3f42ad-a965-41f5-847a-5b0997ab8033" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Sin token responde 401/403" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20EGetRolesSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20e] GET /roles sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:26).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20f] GET /auditoria sin token" id="d87a147d-9af1-440d-9756-f819e58f58aa" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Sin token responde 401/403" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20FGetAuditoriaSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20f] GET /auditoria sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:27).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20g] GET /empresa-usuarios/:id sin token" id="77a0a77e-7571-454c-a317-109a3b5f7d58" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Sin token responde 401/403" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20GGetEmpresaUsuariosIdSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20g] GET /empresa-usuarios/:id sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:28).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20h] POST /auditoria sin token (inyección de registros falsos)" id="cde6c6a1-0014-40b6-ac54-2f3c109597aa" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.006">
+    <testcase name="Sin token responde 401/403" time="0.006" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20HPostAuditoriaSinTokenInyeccionDeRegistrosFalsos">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20h] POST /auditoria sin token (inyección de registros falsos).]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:29).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20i] POST /contratos sin token" id="0ebfb276-7943-4c03-99cb-4720cb007e00" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.014">
+    <testcase name="Sin token responde 401/403" time="0.014" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20IPostContratosSinToken">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20i] POST /contratos sin token.]]>
+        <![CDATA[Test description: Sin token responde 401/403.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:30).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20j] DELETE /contratos/:id sin token" id="988759d1-26d7-4cb0-88e8-9fccfab52e32" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="0.010">
+    <testcase name="Sin token responde 401/403" time="0.010" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20JDeleteContratosIdSinToken"/>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20k] GET /clientes sin token (control existente)" id="54217f98-87c7-49bb-b52d-54dadbe116ca" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="4.002">
+    <testcase name="Sin token responde 401/403" time="4.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp20KGetClientesSinTokenControlExistente"/>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08a] Editor no puede crear clientes vía API" id="5e83d303-0dfe-4445-89db-b67a7cb12e06" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.007">
+    <testcase name="Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura)" time="0.007" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp08AEditorNoPuedeCrearClientesViaApi">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08a] Editor no puede crear clientes vía API.]]>
+        <![CDATA[Test description: Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 201
+   at Object.eval sandbox-script.js:1:33).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08b] Editor no puede eliminar clientes vía API" id="7ae109bd-0c33-4924-a449-8304117c0964" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Responde 403 (rol editor)" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp08BEditorNoPuedeEliminarClientesViaApi">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08b] Editor no puede eliminar clientes vía API.]]>
+        <![CDATA[Test description: Responde 403 (rol editor).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 200
+   at Object.eval sandbox-script.js:1:34).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-07] Editor no puede crear usuarios con rol administrador" id="931e4fab-2aed-4b41-a7ce-e4c3c198f52c" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.007">
+    <testcase name="Responde 403 (escalamiento de privilegios)" time="0.007" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp07EditorNoPuedeCrearUsuariosConRolAdministrador">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-07] Editor no puede crear usuarios con rol administrador.]]>
+        <![CDATA[Test description: Responde 403 (escalamiento de privilegios).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 201
+   at Object.eval sandbox-script.js:1:35).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13a] Empresa B no ve clientes de empresa A (control existente)" id="579e6273-f656-4e66-93dd-3e65e22e8e5c" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="0" errors="0" time="0.003">
+    <testcase name="Responde 403/404 a recurso de otra empresa" time="0.003" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp13AEmpresaBNoVeClientesDeEmpresaAControlExistente"/>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13b] Empresa B no puede leer contratos de empresa A" id="0f7adaa3-984c-44fc-b8b5-379e5d46582e" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Responde 403/404 a recurso de otra empresa (RB-2)" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp13BEmpresaBNoPuedeLeerContratosDeEmpresaA">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13b] Empresa B no puede leer contratos de empresa A.]]>
+        <![CDATA[Test description: Responde 403/404 a recurso de otra empresa (RB-2).]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:37).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13c] Empresa B no puede descargar documentos de empresa A" id="b157d540-542b-41ab-89a3-cb564587819e" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.004">
+    <testcase name="Responde 403/404 a documento de otra empresa (RB-2)" time="0.004" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp13CEmpresaBNoPuedeDescargarDocumentosDeEmpresaA">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13c] Empresa B no puede descargar documentos de empresa A.]]>
+        <![CDATA[Test description: Responde 403/404 a documento de otra empresa (RB-2).]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:38).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13d] Empresa B no puede leer datos de empresa A" id="346d3de3-9ec5-4eaf-bc02-1a8a4f5a82c4" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Responde 403/404 a datos de otra empresa" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp13DEmpresaBNoPuedeLeerDatosDeEmpresaA">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13d] Empresa B no puede leer datos de empresa A.]]>
+        <![CDATA[Test description: Responde 403/404 a datos de otra empresa.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:39).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-19] Auditoría de empresa B no expone eventos de empresa A" id="dfbd6514-1ffc-4ebd-80ce-c640ca0cecff" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="No contiene acciones de los usuarios admin/editor de la empresa A" time="0.002" classname="03SeguridadControlDeAccesoYAislamientoOwaspA01Cp19AuditoriaDeEmpresaBNoExponeEventosDeEmpresaA">
+      <failure type="AssertionFailure" message="12 eventos de otra empresa expuestos: expected 12 to deeply equal +0">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-19] Auditoría de empresa B no expone eventos de empresa A.]]>
+        <![CDATA[Test description: No contiene acciones de los usuarios admin/editor de la empresa A.]]>
+        <![CDATA[Error message: 12 eventos de otra empresa expuestos: expected 12 to deeply equal +0.]]>
+        <![CDATA[Stacktrace: AssertionError: 12 eventos de otra empresa expuestos: expected 12 to deeply equal +0
+   at Object.eval sandbox-script.js:1:40).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes" id="b50c19cd-08ee-4be8-aba4-f868c5852de9" timestamp="2026-11-11T21:10:08.340Z" tests="4" failures="4" errors="0" time="0.001">
+    <testcase name="X-Content-Type-Options: nosniff" time="0.001" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp23ACabecerasDeSeguridadHttpPresentes">
+      <failure type="AssertionFailure" message="expected undefined to deeply equal 'nosniff'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes.]]>
+        <![CDATA[Test description: X-Content-Type-Options: nosniff.]]>
+        <![CDATA[Error message: expected undefined to deeply equal 'nosniff'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected undefined to deeply equal 'nosniff'
+   at Object.eval sandbox-script.js:1:41).]]>
+      </failure>
+    </testcase>
+    <testcase name="Content-Security-Policy definida" time="0.001" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp23ACabecerasDeSeguridadHttpPresentes">
+      <failure type="AssertionFailure" message="expected false to be true">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes.]]>
+        <![CDATA[Test description: Content-Security-Policy definida.]]>
+        <![CDATA[Error message: expected false to be true.]]>
+        <![CDATA[Stacktrace: AssertionError: expected false to be true
+   at Object.eval sandbox-script.js:2:41).]]>
+      </failure>
+    </testcase>
+    <testcase name="Strict-Transport-Security definida (HSTS)" time="0.001" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp23ACabecerasDeSeguridadHttpPresentes">
+      <failure type="AssertionFailure" message="expected false to be true">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes.]]>
+        <![CDATA[Test description: Strict-Transport-Security definida (HSTS).]]>
+        <![CDATA[Error message: expected false to be true.]]>
+        <![CDATA[Stacktrace: AssertionError: expected false to be true
+   at Object.eval sandbox-script.js:3:41).]]>
+      </failure>
+    </testcase>
+    <testcase name="No revela tecnología (sin X-Powered-By)" time="0.001" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp23ACabecerasDeSeguridadHttpPresentes">
+      <failure type="AssertionFailure" message="expected true to be false">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes.]]>
+        <![CDATA[Test description: No revela tecnología (sin X-Powered-By).]]>
+        <![CDATA[Error message: expected true to be false.]]>
+        <![CDATA[Stacktrace: AssertionError: expected true to be false
+   at Object.eval sandbox-script.js:4:41).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23b] CORS no acepta orígenes arbitrarios" id="5ab9e4cf-1d79-4d1f-9fe6-2a8c508648db" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.002">
+    <testcase name="Access-Control-Allow-Origin no es * ni el origen atacante" time="0.002" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp23BCorsNoAceptaOrigenesArbitrarios">
+      <failure type="AssertionFailure" message="ACAO = *: expected true to be false">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23b] CORS no acepta orígenes arbitrarios.]]>
+        <![CDATA[Test description: Access-Control-Allow-Origin no es * ni el origen atacante.]]>
+        <![CDATA[Error message: ACAO = *: expected true to be false.]]>
+        <![CDATA[Stacktrace: AssertionError: ACAO = *: expected true to be false
+   at Object.eval sandbox-script.js:1:42).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24] Errores no exponen detalles internos (SQL/stack)" id="578676a8-86be-4a94-a33b-a12cc255f69d" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="Respuesta sin mensajes del motor de base de datos" time="0.003" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp24ErroresNoExponenDetallesInternosSqlStack">
+      <failure type="AssertionFailure" message="expected '{&quot;error&quot;:&quot;Error al obtener cliente&quot;,&quot;…' not to match /invalid input syntax|syntax error|postgres|pg_|at .*\.js/i">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24] Errores no exponen detalles internos (SQL/stack).]]>
+        <![CDATA[Test description: Respuesta sin mensajes del motor de base de datos.]]>
+        <![CDATA[Error message: expected '{"error":"Error al obtener cliente","…' not to match /invalid input syntax|syntax error|postgres|pg_|at .*\.js/i.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '{"error":"Error al obtener cliente","…' not to match /invalid input syntax|syntax error|postgres|pg_|at .*\.js/i
+   at Object.eval sandbox-script.js:1:43).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-15] Carga de archivo no permitido (.exe) es rechazada" id="0e756aa5-8a69-4407-8057-90969498193f" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.015">
+    <testcase name="Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG)" time="0.015" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp15CargaDeArchivoNoPermitidoExeEsRechazada">
+      <failure type="AssertionFailure" message="expected 201 to be one of [ 400, 415 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-15] Carga de archivo no permitido (.exe) es rechazada.]]>
+        <![CDATA[Test description: Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG).]]>
+        <![CDATA[Error message: expected 201 to be one of [ 400, 415 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 201 to be one of [ 400, 415 ]
+   at Object.eval sandbox-script.js:1:44).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24b] Documentación Swagger no expuesta públicamente en producción" id="3778dd04-1d95-4904-bcb7-2e884499ef8f" timestamp="2026-11-11T21:10:08.340Z" tests="1" failures="1" errors="0" time="0.003">
+    <testcase name="/docs responde 401/403/404 con NODE_ENV=production" time="0.003" classname="04SeguridadConfiguracionErroresYArchivosOwaspA04A05Cp24BDocumentacionSwaggerNoExpuestaPublicamenteEnProduccion">
+      <failure type="AssertionFailure" message="Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24b] Documentación Swagger no expuesta públicamente en producción.]]>
+        <![CDATA[Test description: /docs responde 401/403/404 con NODE_ENV=production.]]>
+        <![CDATA[Error message: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]
+   at Object.eval sandbox-script.js:1:45).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27a] GET / (salud de la API)" id="f8a8895f-48d7-4b96-8c85-83f7045360f2" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Responde HTTP 200" time="0.003" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27AGetSaludDeLaApi"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="0.003" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27AGetSaludDeLaApi"/>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27b] POST /autenticacion/login" id="dfb3aa5b-061b-416c-b5d6-a69375e1ac7c" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.010">
+    <testcase name="Responde HTTP 200" time="4.010" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27BPostAutenticacionLogin"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="4.010" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27BPostAutenticacionLogin">
+      <failure type="AssertionFailure" message="expected 4010 to be below 300">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27b] POST /autenticacion/login.]]>
+        <![CDATA[Test description: Tiempo de respuesta < 300 ms (NFR-PERF-1).]]>
+        <![CDATA[Error message: expected 4010 to be below 300.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 4010 to be below 300
+   at Object.eval sandbox-script.js:2:47).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27c] GET /clientes" id="a8cf3d09-1103-451f-b47e-2b8b4fa30cf0" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.006">
+    <testcase name="Responde HTTP 200" time="4.006" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27CGetClientes"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="4.006" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27CGetClientes">
+      <failure type="AssertionFailure" message="expected 4006 to be below 300">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27c] GET /clientes.]]>
+        <![CDATA[Test description: Tiempo de respuesta < 300 ms (NFR-PERF-1).]]>
+        <![CDATA[Error message: expected 4006 to be below 300.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 4006 to be below 300
+   at Object.eval sandbox-script.js:2:48).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27d] GET /contratos" id="c72703fe-0085-4f64-9203-fa53df10d5f4" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.007">
+    <testcase name="Responde HTTP 200" time="4.007" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27DGetContratos"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="4.007" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27DGetContratos">
+      <failure type="AssertionFailure" message="expected 4007 to be below 300">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27d] GET /contratos.]]>
+        <![CDATA[Test description: Tiempo de respuesta < 300 ms (NFR-PERF-1).]]>
+        <![CDATA[Error message: expected 4007 to be below 300.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 4007 to be below 300
+   at Object.eval sandbox-script.js:2:49).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27e] GET /metricas" id="221e639d-c868-41de-abe4-29b00192a75a" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="1" errors="0" time="4.010">
+    <testcase name="Responde HTTP 200" time="4.010" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27EGetMetricas"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="4.010" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27EGetMetricas">
+      <failure type="AssertionFailure" message="expected 4010 to be below 300">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ffc4eb54-c400-47c0-ad42-fc7d6fb3fb0c.]]>
+        <![CDATA[Collection name: Atlas EP5 - Pruebas automatizadas funcionales y de seguridad.]]>
+        <![CDATA[Request name: 05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27e] GET /metricas.]]>
+        <![CDATA[Test description: Tiempo de respuesta < 300 ms (NFR-PERF-1).]]>
+        <![CDATA[Error message: expected 4010 to be below 300.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 4010 to be below 300
+   at Object.eval sandbox-script.js:2:50).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Rendimiento por petición (NFR-PERF-1 &lt; 300 ms) / [CP-27f] GET /clientes/:id" id="beb4a02a-a1ee-4027-8419-9053bb508685" timestamp="2026-11-11T21:10:08.340Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Responde HTTP 200" time="0.003" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27FGetClientesId"/>
+    <testcase name="Tiempo de respuesta &lt; 300 ms (NFR-PERF-1)" time="0.003" classname="05RendimientoPorPeticionNfrPerf1Lt300MsCp27FGetClientesId"/>
+  </testsuite>
+</testsuites>

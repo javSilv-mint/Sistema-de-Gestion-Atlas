@@ -1,0 +1,915 @@
+{
+  "sast": {
+    "semgrep-owasp": {
+      "total": 1,
+      "severidad": {
+        "ERROR": 1
+      },
+      "reglas": {
+        "missing-user": 1
+      },
+      "errores_motor": 1
+    },
+    "semgrep-atlas": {
+      "total": 61,
+      "severidad": {
+        "WARNING": 49,
+        "ERROR": 12
+      },
+      "reglas": {
+        "atlas-fuga-de-error": 39,
+        "atlas-jwt-secreto-por-defecto": 9,
+        "atlas-latencia-artificial": 4,
+        "atlas-borrado-fisico": 4,
+        "atlas-password-texto-plano": 2,
+        "atlas-cors-abierto": 1,
+        "atlas-credencial-bd-por-defecto": 1,
+        "atlas-upload-sin-limites": 1
+      },
+      "errores_motor": 0
+    }
+  },
+  "gitleaks": {
+    "total": 1,
+    "reglas": {
+      "generic-api-key": 1
+    },
+    "archivos": [
+      "CodigoFuenteA/README.md"
+    ]
+  },
+  "npm_audit": {
+    "backend": {
+      "conteo": {
+        "info": 0,
+        "low": 0,
+        "moderate": 2,
+        "high": 4,
+        "critical": 1,
+        "total": 7
+      },
+      "paquetes": {
+        "body-parser": "high",
+        "express": "high",
+        "jws": "high",
+        "morgan": "moderate",
+        "path-to-regexp": "high",
+        "proxy-addr": "critical",
+        "qs": "moderate"
+      }
+    },
+    "frontend": {
+      "conteo": {
+        "info": 0,
+        "low": 0,
+        "moderate": 2,
+        "high": 4,
+        "critical": 0,
+        "total": 6
+      },
+      "paquetes": {
+        "axios": "high",
+        "follow-redirects": "moderate",
+        "form-data": "high",
+        "react-router": "high",
+        "react-router-dom": "high",
+        "yaml": "moderate"
+      }
+    }
+  },
+  "trivy": {
+    "vulnerabilidades": {
+      "HIGH": 34,
+      "LOW": 4,
+      "MEDIUM": 36,
+      "CRITICAL": 1
+    },
+    "misconfig": {
+      "HIGH": 2,
+      "LOW": 2
+    },
+    "secretos": 0,
+    "detalle_misconfig": [
+      {
+        "archivo": "BACKEND/Dockerfile",
+        "id": "DS-0002",
+        "titulo": "Image user should not be 'root'",
+        "sev": "HIGH"
+      },
+      {
+        "archivo": "BACKEND/Dockerfile",
+        "id": "DS-0026",
+        "titulo": "No HEALTHCHECK defined",
+        "sev": "LOW"
+      },
+      {
+        "archivo": "FRONTEND/Dockerfile",
+        "id": "DS-0002",
+        "titulo": "Image user should not be 'root'",
+        "sev": "HIGH"
+      },
+      {
+        "archivo": "FRONTEND/Dockerfile",
+        "id": "DS-0026",
+        "titulo": "No HEALTHCHECK defined",
+        "sev": "LOW"
+      }
+    ]
+  },
+  "newman": {
+    "peticiones": {
+      "total": 51,
+      "pending": 0,
+      "failed": 0
+    },
+    "aserciones": {
+      "total": 69,
+      "pending": 0,
+      "failed": 37
+    },
+    "casos": [
+      {
+        "caso": "PREP Login administrador (admin)",
+        "metodo": "POST",
+        "status": 200,
+        "ms": 4095,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "PREP Login editor (editor)",
+        "metodo": "POST",
+        "status": 200,
+        "ms": 4011,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "PREP Registrar empresa B (segundo tenant)",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 8,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "PREP Login usuario empresa B",
+        "metodo": "POST",
+        "status": 200,
+        "ms": 4007,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-01] Inicio de sesión exitoso entrega JWT válido",
+        "metodo": "POST",
+        "status": 200,
+        "ms": 4009,
+        "aserciones": 3,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-02] Credenciales inválidas son rechazadas",
+        "metodo": "POST",
+        "status": 401,
+        "ms": 4007,
+        "aserciones": 2,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-10] Crear cliente con datos válidos",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 7,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Cliente queda asociado a la empresa del token (RB-2): expected '1' to deeply equal 1"
+        ]
+      },
+      {
+        "caso": "[CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 6,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde HTTP 400 con detalle de validación (RF-4.3): expected response to have status code 400 but got 201"
+        ]
+      },
+      {
+        "caso": "[CP-11] Listar clientes de la empresa",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4009,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Devuelve arreglo solo con clientes de la empresa 1: expected '1' to deeply equal 1"
+        ]
+      },
+      {
+        "caso": "[CP-11b] Buscar cliente por nombre",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 7,
+        "aserciones": 2,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-14] Crear contrato con documento PDF asociado a un cliente",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 16,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-14b] Rechazar contrato con fecha de término anterior a la de inicio",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 5,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde HTTP 400 por rango de fechas inválido: expected response to have status code 400 but got 201"
+        ]
+      },
+      {
+        "caso": "[CP-16] Descargar documento del contrato (usuario autorizado)",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 6,
+        "aserciones": 2,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-17] Listar contratos con estado calculado",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4007,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Cada contrato informa su estado (activo / por vencer / expirado): contrato 4 sin campo estado: expected undefined to exist"
+        ]
+      },
+      {
+        "caso": "[CP-12] Crear cliente desechable para prueba de eliminación",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 5,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-12] Eliminar cliente (debe ser eliminación lógica)",
+        "metodo": "DELETE",
+        "status": 200,
+        "ms": 5,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico: expected '{\"deleted\":true}' to match /eliminado|inactivo|deleted_at|estado/i"
+        ]
+      },
+      {
+        "caso": "[SEC-AUT-01] Inyección SQL en login es rechazada",
+        "metodo": "POST",
+        "status": 401,
+        "ms": 4008,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[SEC-AUT-02] JWT con algoritmo 'none' es rechazado",
+        "metodo": "GET",
+        "status": 401,
+        "ms": 4007,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[SEC-AUT-03] JWT forjado con secreto por defecto es rechazado",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4009,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 401 (el secreto JWT no debe ser el valor por defecto público): expected response to have status code 401 but got 200"
+        ]
+      },
+      {
+        "caso": "[CP-05] Registro con contraseña débil es rechazado",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 4,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 400 por no cumplir política de contraseñas (NFR-SEG-2): expected response to have status code 400 but got 201"
+        ]
+      },
+      {
+        "caso": "[CP-03] Existe endpoint de cierre de sesión con revocación del token",
+        "metodo": "POST",
+        "status": 404,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 200/204 (logout implementado en servidor): expected 404 to be one of [ 200, 204 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20a] GET /contratos/:id sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20b] GET /contratos/:id/file sin token (descarga de documento)",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20c] GET /usuarios/:id sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20d] GET /empresas sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20e] GET /roles sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20f] GET /auditoria sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20g] GET /empresa-usuarios/:id sin token",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20h] POST /auditoria sin token (inyección de registros falsos)",
+        "metodo": "POST",
+        "status": 500,
+        "ms": 6,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20i] POST /contratos sin token",
+        "metodo": "POST",
+        "status": 500,
+        "ms": 14,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Sin token responde 401/403: Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-20j] DELETE /contratos/:id sin token",
+        "metodo": "DELETE",
+        "status": 404,
+        "ms": 10,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-20k] GET /clientes sin token (control existente)",
+        "metodo": "GET",
+        "status": 401,
+        "ms": 4002,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-08a] Editor no puede crear clientes vía API",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 7,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura): expected response to have status code 403 but got 201"
+        ]
+      },
+      {
+        "caso": "[CP-08b] Editor no puede eliminar clientes vía API",
+        "metodo": "DELETE",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403 (rol editor): expected response to have status code 403 but got 200"
+        ]
+      },
+      {
+        "caso": "[CP-07] Editor no puede crear usuarios con rol administrador",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 7,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403 (escalamiento de privilegios): expected response to have status code 403 but got 201"
+        ]
+      },
+      {
+        "caso": "[CP-13a] Empresa B no ve clientes de empresa A (control existente)",
+        "metodo": "GET",
+        "status": 404,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-13b] Empresa B no puede leer contratos de empresa A",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403/404 a recurso de otra empresa (RB-2): Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-13c] Empresa B no puede descargar documentos de empresa A",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403/404 a documento de otra empresa (RB-2): Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-13d] Empresa B no puede leer datos de empresa A",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 403/404 a datos de otra empresa: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-19] Auditoría de empresa B no expone eventos de empresa A",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "No contiene acciones de los usuarios admin/editor de la empresa A: 12 eventos de otra empresa expuestos: expected 12 to deeply equal +0"
+        ]
+      },
+      {
+        "caso": "[CP-23a] Cabeceras de seguridad HTTP presentes",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 1,
+        "aserciones": 4,
+        "fallidas": 4,
+        "detalle": [
+          "X-Content-Type-Options: nosniff: expected undefined to deeply equal 'nosniff'",
+          "Content-Security-Policy definida: expected false to be true",
+          "Strict-Transport-Security definida (HSTS): expected false to be true",
+          "No revela tecnología (sin X-Powered-By): expected true to be false"
+        ]
+      },
+      {
+        "caso": "[CP-23b] CORS no acepta orígenes arbitrarios",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 2,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Access-Control-Allow-Origin no es * ni el origen atacante: ACAO = *: expected true to be false"
+        ]
+      },
+      {
+        "caso": "[CP-24] Errores no exponen detalles internos (SQL/stack)",
+        "metodo": "GET",
+        "status": 500,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Respuesta sin mensajes del motor de base de datos: expected '{\"error\":\"Error al obtener cliente\",\"…' not to match /invalid input syntax|syntax error|postgres|pg_|at .*\\.js/i"
+        ]
+      },
+      {
+        "caso": "[CP-15] Carga de archivo no permitido (.exe) es rechazada",
+        "metodo": "POST",
+        "status": 201,
+        "ms": 15,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG): expected 201 to be one of [ 400, 415 ]"
+        ]
+      },
+      {
+        "caso": "[CP-24b] Documentación Swagger no expuesta públicamente en producción",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 1,
+        "fallidas": 1,
+        "detalle": [
+          "/docs responde 401/403/404 con NODE_ENV=production: Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]"
+        ]
+      },
+      {
+        "caso": "[CP-27a] GET / (salud de la API)",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 2,
+        "fallidas": 0,
+        "detalle": []
+      },
+      {
+        "caso": "[CP-27b] POST /autenticacion/login",
+        "metodo": "POST",
+        "status": 200,
+        "ms": 4010,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Tiempo de respuesta < 300 ms (NFR-PERF-1): expected 4010 to be below 300"
+        ]
+      },
+      {
+        "caso": "[CP-27c] GET /clientes",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4006,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Tiempo de respuesta < 300 ms (NFR-PERF-1): expected 4006 to be below 300"
+        ]
+      },
+      {
+        "caso": "[CP-27d] GET /contratos",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4007,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Tiempo de respuesta < 300 ms (NFR-PERF-1): expected 4007 to be below 300"
+        ]
+      },
+      {
+        "caso": "[CP-27e] GET /metricas",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 4010,
+        "aserciones": 2,
+        "fallidas": 1,
+        "detalle": [
+          "Tiempo de respuesta < 300 ms (NFR-PERF-1): expected 4010 to be below 300"
+        ]
+      },
+      {
+        "caso": "[CP-27f] GET /clientes/:id",
+        "metodo": "GET",
+        "status": 200,
+        "ms": 3,
+        "aserciones": 2,
+        "fallidas": 0,
+        "detalle": []
+      }
+    ],
+    "duracion_ms": 61108
+  },
+  "axe": {},
+  "lighthouse": {
+    "puntajes": {
+      "performance": 56,
+      "accessibility": 96,
+      "best-practices": 100,
+      "seo": 83
+    },
+    "metricas": {
+      "first-contentful-paint": "4.4 s",
+      "largest-contentful-paint": "7.8 s",
+      "total-blocking-time": "370 ms",
+      "cumulative-layout-shift": "0",
+      "speed-index": "4.4 s",
+      "interactive": "7.8 s"
+    },
+    "a11y_fallas": [
+      "Background and foreground colors do not have a sufficient contrast ratio."
+    ]
+  },
+  "k6": {
+    "vus_max": 200,
+    "peticiones": 4269,
+    "rps": 41.1,
+    "error_rate": 0,
+    "iteraciones": 1363,
+    "listar_clientes": {
+      "avg": 4002.6,
+      "med": 4002.4,
+      "p(90)": 4003.7,
+      "p(95)": 4004.2,
+      "max": 4012.2
+    },
+    "obtener_cliente": {
+      "avg": 2.0,
+      "med": 1.7,
+      "p(90)": 2.7,
+      "p(95)": 3.1,
+      "max": 9.8
+    },
+    "listar_contratos": {
+      "avg": 4002.4,
+      "med": 4002.3,
+      "p(90)": 4003.4,
+      "p(95)": 4003.9,
+      "max": 4011.3
+    },
+    "login": {
+      "avg": 4003.9,
+      "med": 4003.1,
+      "p(90)": 4004.5,
+      "p(95)": 4005.3,
+      "max": 4080.8
+    },
+    "http_req_duration": {
+      "avg": 2715.0,
+      "med": 4001.9,
+      "p(90)": 4003.3,
+      "p(95)": 4003.8,
+      "max": 4080.8
+    },
+    "umbrales": [
+      {
+        "metrica": "http_req_failed",
+        "umbral": "rate<0.01",
+        "ok": true
+      },
+      {
+        "metrica": "t_obtener_cliente",
+        "umbral": "p(95)<300",
+        "ok": true
+      },
+      {
+        "metrica": "http_req_duration{tipo:crud}",
+        "umbral": "p(95)<300",
+        "ok": false
+      },
+      {
+        "metrica": "t_listar_clientes",
+        "umbral": "p(95)<300",
+        "ok": false
+      }
+    ]
+  },
+  "zap": {
+    "zap-api": {
+      "conteo": {
+        "Alto": 1,
+        "Medio": 1,
+        "Bajo": 5,
+        "Informativo": 3
+      },
+      "alertas": [
+        {
+          "alerta": "SQL Injection",
+          "riesgo": "Alto",
+          "cwe": "89",
+          "instancias": 1
+        },
+        {
+          "alerta": "Cross-Domain Misconfiguration",
+          "riesgo": "Medio",
+          "cwe": "264",
+          "instancias": 5
+        },
+        {
+          "alerta": "A Server Error response code was returned by the server",
+          "riesgo": "Bajo",
+          "cwe": "388",
+          "instancias": 7
+        },
+        {
+          "alerta": "Application Error Disclosure",
+          "riesgo": "Bajo",
+          "cwe": "550",
+          "instancias": 4
+        },
+        {
+          "alerta": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+          "riesgo": "Bajo",
+          "cwe": "497",
+          "instancias": 5
+        },
+        {
+          "alerta": "Unexpected Content-Type was returned",
+          "riesgo": "Bajo",
+          "cwe": "-1",
+          "instancias": 12
+        },
+        {
+          "alerta": "X-Content-Type-Options Header Missing",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 5
+        },
+        {
+          "alerta": "A Client Error response code was returned by the server",
+          "riesgo": "Informativo",
+          "cwe": "388",
+          "instancias": 47
+        },
+        {
+          "alerta": "Non-Storable Content",
+          "riesgo": "Informativo",
+          "cwe": "524",
+          "instancias": 5
+        },
+        {
+          "alerta": "Storable and Cacheable Content",
+          "riesgo": "Informativo",
+          "cwe": "524",
+          "instancias": 2
+        }
+      ]
+    },
+    "zap-frontend": {
+      "conteo": {
+        "Medio": 3,
+        "Bajo": 7,
+        "Informativo": 2
+      },
+      "alertas": [
+        {
+          "alerta": "Content Security Policy (CSP) Header Not Set",
+          "riesgo": "Medio",
+          "cwe": "693",
+          "instancias": 3
+        },
+        {
+          "alerta": "Missing Anti-clickjacking Header",
+          "riesgo": "Medio",
+          "cwe": "1021",
+          "instancias": 1
+        },
+        {
+          "alerta": "Sub Resource Integrity Attribute Missing",
+          "riesgo": "Medio",
+          "cwe": "345",
+          "instancias": 5
+        },
+        {
+          "alerta": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 3
+        },
+        {
+          "alerta": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 3
+        },
+        {
+          "alerta": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 3
+        },
+        {
+          "alerta": "Permissions Policy Header Not Set",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 4
+        },
+        {
+          "alerta": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+          "riesgo": "Bajo",
+          "cwe": "497",
+          "instancias": 5
+        },
+        {
+          "alerta": "Timestamp Disclosure - Unix",
+          "riesgo": "Bajo",
+          "cwe": "497",
+          "instancias": 1
+        },
+        {
+          "alerta": "X-Content-Type-Options Header Missing",
+          "riesgo": "Bajo",
+          "cwe": "693",
+          "instancias": 5
+        },
+        {
+          "alerta": "Modern Web Application",
+          "riesgo": "Informativo",
+          "cwe": "-1",
+          "instancias": 3
+        },
+        {
+          "alerta": "Storable and Cacheable Content",
+          "riesgo": "Informativo",
+          "cwe": "524",
+          "instancias": 5
+        }
+      ]
+    }
+  },
+  "gate": {
+    "superado": false,
+    "motivos": [
+      "SAST semgrep-owasp: 1 hallazgos de severidad ERROR",
+      "SAST semgrep-atlas: 12 hallazgos de severidad ERROR",
+      "Gitleaks: 1 secretos en el repositorio",
+      "npm audit backend: 1 críticas / 4 altas",
+      "npm audit frontend: 0 críticas / 4 altas",
+      "Newman: 37 aserciones fallidas",
+      "k6: umbral http_req_duration{tipo:crud} p(95)<300 no cumplido",
+      "k6: umbral t_listar_clientes p(95)<300 no cumplido",
+      "ZAP zap-api: 1 alertas de riesgo alto"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+PASS: Cross Site Scripting (Persistent) [40014]
+PASS: Cross Site Scripting (Persistent) - Prime [40016]
+PASS: Cross Site Scripting (Persistent) - Spider [40017]
+PASS: SQL Injection - MySQL (Time Based) [40019]
+PASS: SQL Injection - Hypersonic SQL (Time Based) [40020]
+PASS: SQL Injection - Oracle (Time Based) [40021]
+PASS: SQL Injection - PostgreSQL (Time Based) [40022]
+PASS: Cross Site Scripting (DOM Based) [40026]
+PASS: SQL Injection - MsSQL (Time Based) [40027]
+PASS: ELMAH Information Leak [40028]
+PASS: Trace.axd Information Leak [40029]
+PASS: .htaccess Information Leak [40032]
+PASS: .env Information Leak [40034]
+PASS: Hidden File Finder [40035]
+PASS: Spring Actuator Information Leak [40042]
+PASS: Log4Shell [40043]
+PASS: Exponential Entity Expansion (Billion Laughs Attack) [40044]
+PASS: Spring4Shell [40045]
+PASS: Remote Code Execution (React2Shell) [40048]
+PASS: Script Active Scan Rules [50000]
+PASS: Script Passive Scan Rules [50001]
+PASS: Path Traversal [6]
+PASS: Remote File Inclusion [7]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Insufficient Site Isolation Against Spectre Vulnerability [90004]
+PASS: Charset Mismatch [90011]
+PASS: XSLT Injection [90017]
+PASS: Server Side Code Injection [90019]
+PASS: Remote OS Command Injection [90020]
+PASS: XPath Injection [90021]
+PASS: XML External Entity Attack [90023]
+PASS: Generic Padding Oracle [90024]
+PASS: SOAP Action Spoofing [90026]
+PASS: SOAP XML Injection [90029]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+PASS: Cloud Metadata Potentially Exposed [90034]
+PASS: Server Side Template Injection [90035]
+PASS: Server Side Template Injection (Blind) [90036]
+PASS: Remote OS Command Injection (Time Based) [90037]
+WARN-NEW: A Server Error response code was returned by the server [100000] x 7 
+	http://localhost:4450/contratos (500 Internal Server Error)
+	http://localhost:4450/auditoria (500 Internal Server Error)
+	http://localhost:4450/empresas (500 Internal Server Error)
+	http://localhost:4450/roles (500 Internal Server Error)
+	http://localhost:4450/empresa-usuarios/10 (500 Internal Server Error)
+WARN-NEW: Unexpected Content-Type was returned [100001] x 12 
+	http://localhost:4450/2258423192517410880 (404 Not Found)
+	http://localhost:4450/autenticacion/2852361842807343050 (404 Not Found)
+	http://localhost:4450/contratos/10/8548006729198107611 (404 Not Found)
+	http://localhost:4450/autenticacion (404 Not Found)
+	http://localhost:4450/contratos (500 Internal Server Error)
+WARN-NEW: X-Content-Type-Options Header Missing [10021] x 5 
+	http://localhost:4450/openapi.json (200 OK)
+	http://localhost:4450/usuarios (201 Created)
+	http://localhost:4450/empresas (200 OK)
+	http://localhost:4450/roles (200 OK)
+	http://localhost:4450/auditoria (200 OK)
+WARN-NEW: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037] x 13 
+	http://localhost:4450/openapi.json (200 OK)
+	http://localhost:4450/usuarios/10 (404 Not Found)
+	http://localhost:4450/autenticacion/login (401 Unauthorized)
+	http://localhost:4450/usuarios (401 Unauthorized)
+	http://localhost:4450/usuarios (201 Created)
+WARN-NEW: Cross-Domain Misconfiguration [10098] x 13 
+	http://localhost:4450/openapi.json (200 OK)
+	http://localhost:4450/usuarios/10 (404 Not Found)
+	http://localhost:4450/autenticacion/login (401 Unauthorized)
+	http://localhost:4450/usuarios (201 Created)
+	http://localhost:4450/usuarios (401 Unauthorized)
+WARN-NEW: SQL Injection [40018] x 1 
+	http://localhost:4450/roles/10 (500 Internal Server Error)
+WARN-NEW: Application Error Disclosure [90022] x 4 
+	http://localhost:4450/contratos (500 Internal Server Error)
+	http://localhost:4450/empresas (500 Internal Server Error)
+	http://localhost:4450/auditoria (500 Internal Server Error)
+	http://localhost:4450/roles (500 Internal Server Error)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 7	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 115

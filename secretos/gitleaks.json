@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 30,
+  "EndLine": 30,
+  "StartColumn": 5,
+  "EndColumn": 82,
+  "Match": "JWT_SECRET: `REDACTED`",
+  "Secret": "REDACTED",
+  "File": "CodigoFuenteA/README.md",
+  "SymlinkFile": "",
+  "Commit": "92d58be5088417cdcd8e602188991543b30e594c",
+  "Link": "https://github.com/javSilv-mint/Sistema-de-Gestion-Atlas/blob/92d58be5088417cdcd8e602188991543b30e594c/CodigoFuenteA/README.md?plain=1#L30",
+  "Entropy": 3.8203132,
+  "Author": "javsilv",
+  "Email": "jav.silvagonza@gmail.com",
+  "Date": "2026-10-14T02:34:24Z",
+  "Message": "CodigoFuenteA\n\nSe sube el código fuente entregado por el profesor al repositorio.",
+  "Tags": [],
+  "Fingerprint": "92d58be5088417cdcd8e602188991543b30e594c:CodigoFuenteA/README.md:generic-api-key:30"
+ }
+]

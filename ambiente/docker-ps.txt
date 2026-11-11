@@ -1,0 +1,4 @@
+NAME             IMAGE                          COMMAND                  SERVICE          CREATED          STATUS                    PORTS
+atlas-backend    codigofuentea-atlas-backend    "docker-entrypoint.s…"   atlas-backend    11 seconds ago   Up 5 seconds              3000/tcp, 0.0.0.0:4450->4000/tcp, [::]:4450->4000/tcp
+atlas-frontend   codigofuentea-atlas-frontend   "/docker-entrypoint.…"   atlas-frontend   11 seconds ago   Up 5 seconds              0.0.0.0:3350->80/tcp, [::]:3350->80/tcp
+atlas-postgres   postgres:15-alpine             "docker-entrypoint.s…"   atlas-postgres   11 seconds ago   Up 11 seconds (healthy)   0.0.0.0:15432->5432/tcp, [::]:15432->5432/tcp

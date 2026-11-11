@@ -1,0 +1,441 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 69 files tracked by git with 8 Code rules:
+  Scanning 44 files with 8 js rules.
+                    
+                    
+┌──────────────────┐
+│ 61 Code Findings │
+└──────────────────┘
+                                    
+    CodigoFuenteA/BACKEND/src/app.js
+    ❯❱ qa.semgrep.atlas-cors-abierto
+          ❰❰ Blocking ❱❱
+          cors() sin lista blanca de orígenes (OWASP A05).
+                                                          
+           22┆ app.use(cors());
+                                   
+    CodigoFuenteA/BACKEND/src/db.js
+   ❯❯❱ qa.semgrep.atlas-credencial-bd-por-defecto
+          ❰❰ Blocking ❱❱
+          Cadena de conexión con credenciales embebidas (OWASP A05, CWE-798).
+                                                                             
+            6┆ "postgres://postgres:alone15@localhost:5432/atlas";
+                                             
+    CodigoFuenteA/BACKEND/src/routes/audit.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           32┆ res.status(500).json({ error: "Error al registrar log", glosa: err.message ||
+               err.toString() });                                                           
+            ⋮┆----------------------------------------
+           43┆ res.status(500).json({ error: "Error al listar logs", glosa: err.message || err.toString()
+               });                                                                                       
+                                            
+    CodigoFuenteA/BACKEND/src/routes/auth.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            7┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-latencia-artificial
+          ❰❰ Blocking ❱❱
+          Retardo artificial en la ruta: incumple NFR-PERF-1 (< 300 ms) y facilita DoS.
+                                                                                       
+           17┆ await delay(4000);
+   
+   ❯❯❱ qa.semgrep.atlas-password-texto-plano
+          ❰❰ Blocking ❱❱
+          Comparación de contraseña en texto plano. Usar bcrypt.compare() (OWASP A02/A07, NFR-SEG-2, Ley
+          19.628 art. 11).                                                                              
+                                                                                                        
+           26┆ if (user.contrasena_hash !== password) {
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           62┆ res
+           63┆   .status(500)
+           64┆   .json({ error: "Error en login", glosa: err.message || err.toString() });
+                                               
+    CodigoFuenteA/BACKEND/src/routes/clients.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          120┆ res.status(500).json({
+          121┆   error: "Error al crear cliente",
+          122┆   glosa: err.message || err.toString(),
+          123┆ });
+   
+    ❯❱ qa.semgrep.atlas-latencia-artificial
+          ❰❰ Blocking ❱❱
+          Retardo artificial en la ruta: incumple NFR-PERF-1 (< 300 ms) y facilita DoS.
+                                                                                       
+          131┆ await delay(4000);
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          153┆ res.status(500).json({
+          154┆   error: "Error al listar clientes",
+          155┆   glosa: err.message || err.toString(),
+          156┆ });
+            ⋮┆----------------------------------------
+          181┆ res.status(500).json({
+          182┆   error: "Error en búsqueda",
+          183┆   glosa: err.message || err.toString(),
+          184┆ });
+            ⋮┆----------------------------------------
+          212┆ res.status(500).json({
+          213┆   error: "Error al obtener cliente",
+          214┆   glosa: err.message || err.toString(),
+          215┆ });
+            ⋮┆----------------------------------------
+          319┆ res.status(500).json({
+          320┆   error: "Error al actualizar cliente",
+          321┆   glosa: err.message || err.toString(),
+          322┆ });
+   
+    ❯❱ qa.semgrep.atlas-borrado-fisico
+          ❰❰ Blocking ❱❱
+          DELETE físico sobre tabla de negocio: el ERS exige eliminación lógica y trazabilidad (RF-4, Ley
+          19.628).                                                                                       
+                                                                                                         
+          341┆ "DELETE FROM clientes WHERE id=$1 AND empresa_id = $2 RETURNING *",
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          359┆ res.status(500).json({
+          360┆   error: "Error al eliminar cliente",
+          361┆   glosa: err.message || err.toString(),
+          362┆ });
+                                                 
+    CodigoFuenteA/BACKEND/src/routes/contracts.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            9┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-upload-sin-limites
+          ❰❰ Blocking ❱❱
+          multer sin fileFilter ni limits: permite cualquier tipo y tamaño de archivo (OWASP A04, RF-5.2,
+          CWE-434).                                                                                      
+                                                                                                         
+           15┆ const upload = multer({ storage });
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           64┆ res.status(500).json({
+           65┆   error: "Error al crear contrato",
+           66┆   glosa: err.message || err.toString(),
+           67┆ });
+   
+    ❯❱ qa.semgrep.atlas-latencia-artificial
+          ❰❰ Blocking ❱❱
+          Retardo artificial en la ruta: incumple NFR-PERF-1 (< 300 ms) y facilita DoS.
+                                                                                       
+           75┆ await delay(4000);
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          105┆ res.status(500).json({
+          106┆   error: "Error al listar contratos",
+          107┆   glosa: err.message || err.toString(),
+          108┆ });
+            ⋮┆----------------------------------------
+          171┆ res.status(500).json({
+          172┆   error: "Error al obtener contratos por estado",
+          173┆   glosa: err.message || err.toString(),
+          174┆ });
+            ⋮┆----------------------------------------
+          267┆ res.status(500).json({
+          268┆   error: "Error al obtener estadísticas",
+          269┆   glosa: err.message || err.toString(),
+          270┆ });
+            ⋮┆----------------------------------------
+          286┆ res.status(500).json({
+          287┆   error: "Error al obtener contrato",
+          288┆   glosa: err.message || err.toString(),
+          289┆ });
+            ⋮┆----------------------------------------
+          405┆ res.status(500).json({
+          406┆   error: "Error al actualizar contrato",
+          407┆   glosa: err.message || err.toString(),
+          408┆ });
+            ⋮┆----------------------------------------
+          427┆ res.status(500).json({
+          428┆   error: "Error al obtener archivo",
+          429┆   glosa: err.message || err.toString(),
+          430┆ });
+   
+    ❯❱ qa.semgrep.atlas-borrado-fisico
+          ❰❰ Blocking ❱❱
+          DELETE físico sobre tabla de negocio: el ERS exige eliminación lógica y trazabilidad (RF-4, Ley
+          19.628).                                                                                       
+                                                                                                         
+          441┆ "DELETE FROM contratos WHERE id=$1 RETURNING *",
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          459┆ res.status(500).json({
+          460┆   error: "Error al eliminar contrato",
+          461┆   glosa: err.message || err.toString(),
+          462┆ });
+                                                        
+    CodigoFuenteA/BACKEND/src/routes/empresa_usuarios.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           81┆ res.status(500).json({
+           82┆   error: "Error al crear vínculo",
+           83┆   glosa: err.message || err.toString(),
+           84┆ });
+            ⋮┆----------------------------------------
+          125┆ res.status(500).json({
+          126┆   error: "Error al listar usuarios",
+          127┆   glosa: err.message || err.toString(),
+          128┆ });
+            ⋮┆----------------------------------------
+          144┆ res.status(500).json({
+          145┆   error: "Error al obtener vínculo",
+          146┆   glosa: err.message || err.toString(),
+          147┆ });
+            ⋮┆----------------------------------------
+          174┆ res.status(500).json({
+          175┆   error: "Error al actualizar vínculo",
+          176┆   glosa: err.message || err.toString(),
+          177┆ });
+            ⋮┆----------------------------------------
+          203┆ res.status(500).json({
+          204┆   error: "Error al eliminar vínculo",
+          205┆   glosa: err.message || err.toString(),
+          206┆ });
+                                                
+    CodigoFuenteA/BACKEND/src/routes/empresas.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           54┆ res
+           55┆   .status(500)
+           56┆   .json({
+           57┆     error: "Error al crear empresa con usuario",
+           58┆     glosa: err.message || err.toString(),
+           59┆   });
+            ⋮┆----------------------------------------
+           82┆ res
+           83┆   .status(500)
+           84┆   .json({
+           85┆     error: "Error al crear empresa",
+           86┆     glosa: err.message || err.toString(),
+           87┆   });
+            ⋮┆----------------------------------------
+           99┆ res
+          100┆   .status(500)
+          101┆   .json({
+          102┆     error: "Error al listar empresas",
+          103┆     glosa: err.message || err.toString(),
+          104┆   });
+            ⋮┆----------------------------------------
+          119┆ res
+          120┆   .status(500)
+          121┆   .json({
+          122┆     error: "Error al obtener empresa",
+          123┆     glosa: err.message || err.toString(),
+          124┆   });
+            ⋮┆----------------------------------------
+          151┆ res
+          152┆   .status(500)
+          153┆   .json({
+          154┆     error: "Error al actualizar empresa",
+          155┆     glosa: err.message || err.toString(),
+          156┆   });
+   
+    ❯❱ qa.semgrep.atlas-borrado-fisico
+          ❰❰ Blocking ❱❱
+          DELETE físico sobre tabla de negocio: el ERS exige eliminación lógica y trazabilidad (RF-4, Ley
+          19.628).                                                                                       
+                                                                                                         
+          164┆ "DELETE FROM empresas WHERE id=$1 RETURNING *",
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          182┆ res
+          183┆   .status(500)
+          184┆   .json({
+          185┆     error: "Error al eliminar empresa",
+          186┆     glosa: err.message || err.toString(),
+          187┆   });
+                                                
+    CodigoFuenteA/BACKEND/src/routes/metricas.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-latencia-artificial
+          ❰❰ Blocking ❱❱
+          Retardo artificial en la ruta: incumple NFR-PERF-1 (< 300 ms) y facilita DoS.
+                                                                                       
+           39┆ await delay(4000);
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          176┆ res.status(500).json({
+          177┆   error: "Error al obtener métricas",
+          178┆   glosa: err.message || err.toString(),
+          179┆ });
+                                             
+    CodigoFuenteA/BACKEND/src/routes/roles.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || 'inseguro';
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           34┆ res.status(500).json({ error: 'Error al crear rol', glosa: err.message || err.toString()
+               });                                                                                     
+            ⋮┆----------------------------------------
+           45┆ res.status(500).json({ error: 'Error al listar roles', glosa: err.message || err.toString()
+               });                                                                                        
+            ⋮┆----------------------------------------
+           57┆ res.status(500).json({ error: 'Error al obtener rol', glosa: err.message || err.toString()
+               });                                                                                       
+            ⋮┆----------------------------------------
+           77┆ res.status(500).json({ error: 'Error al actualizar rol', glosa: err.message ||
+               err.toString() });                                                            
+            ⋮┆----------------------------------------
+           96┆ res.status(500).json({ error: 'Error al eliminar rol', glosa: err.message || err.toString()
+               });                                                                                        
+                                             
+    CodigoFuenteA/BACKEND/src/routes/users.js
+   ❯❯❱ qa.semgrep.atlas-jwt-secreto-por-defecto
+          ❰❰ Blocking ❱❱
+          Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si
+          no existe (OWASP A02/A05).                                                                        
+                                                                                                            
+            6┆ const JWT_SECRET = process.env.JWT_SECRET || "inseguro";
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+           32┆ res.status(500).json({
+           33┆   error: "Error al crear usuario",
+           34┆   glosa: err.message || err.toString(),
+           35┆ });
+            ⋮┆----------------------------------------
+           66┆ res.status(500).json({
+           67┆   error: "Error al listar usuarios",
+           68┆   glosa: err.message || err.toString(),
+           69┆ });
+            ⋮┆----------------------------------------
+           85┆ res.status(500).json({
+           86┆   error: "Error al obtener usuario",
+           87┆   glosa: err.message || err.toString(),
+           88┆ });
+            ⋮┆----------------------------------------
+          115┆ res.status(500).json({
+          116┆   error: "Error al actualizar usuario",
+          117┆   glosa: err.message || err.toString(),
+          118┆ });
+   
+    ❯❱ qa.semgrep.atlas-borrado-fisico
+          ❰❰ Blocking ❱❱
+          DELETE físico sobre tabla de negocio: el ERS exige eliminación lógica y trazabilidad (RF-4, Ley
+          19.628).                                                                                       
+                                                                                                         
+          126┆ "DELETE FROM usuarios WHERE id=$1 RETURNING *",
+   
+    ❯❱ qa.semgrep.atlas-fuga-de-error
+          ❰❰ Blocking ❱❱
+          Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7).
+                                                                                                       
+          144┆ res.status(500).json({
+          145┆   error: "Error al eliminar usuario",
+          146┆   glosa: err.message || err.toString(),
+          147┆ });
+                                                             
+    CodigoFuenteA/FRONTEND/src/pages/usuarios/UsuarioForm.jsx
+   ❯❯❱ qa.semgrep.atlas-password-texto-plano
+          ❰❰ Blocking ❱❱
+          Comparación de contraseña en texto plano. Usar bcrypt.compare() (OWASP A02/A07, NFR-SEG-2, Ley
+          19.628 art. 11).                                                                              
+                                                                                                        
+           74┆ if (passwordForm.contrasena_hash !== passwordForm.confirmar_contrasena) {
+
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 61 (61 blocking)
+ • Rules run: 8
+ • Targets scanned: 44
+ • Parsed lines: ~100.0%
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 8 rules on 44 files: 61 findings.
+
+📢 Too many findings? Try Semgrep Pro for more powerful queries and less noise.
+   See https://sg.run/false-positives.

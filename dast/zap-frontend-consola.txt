@@ -1,0 +1,60 @@
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Private IP Disclosure [2]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Script Passive Scan Rules [50001]
+PASS: Stats Passive Scan Rule [50003]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Charset Mismatch [90011]
+PASS: Application Error Disclosure [90022]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+WARN-NEW: Missing Anti-clickjacking Header [10020] x 1 
+	http://localhost:3350/robots.txt (200 OK)
+WARN-NEW: X-Content-Type-Options Header Missing [10021] x 5 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/assets/index-D5HHrKem.css (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+	http://localhost:3350/vite.svg (200 OK)
+WARN-NEW: Server Leaks Version Information via "Server" HTTP Response Header Field [10036] x 5 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/assets/index-D5HHrKem.css (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+	http://localhost:3350/vite.svg (200 OK)
+WARN-NEW: Content Security Policy (CSP) Header Not Set [10038] x 3 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+WARN-NEW: Storable and Cacheable Content [10049] x 5 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/assets/index-D5HHrKem.css (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+	http://localhost:3350/vite.svg (200 OK)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 4 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/assets/index-M3F7cJHy.js (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+WARN-NEW: Timestamp Disclosure - Unix [10096] x 1 
+	http://localhost:3350/assets/index-M3F7cJHy.js (200 OK)
+WARN-NEW: Modern Web Application [10109] x 3 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+WARN-NEW: Sub Resource Integrity Attribute Missing [90003] x 5 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+WARN-NEW: Cross-Origin-Embedder-Policy Header Missing or Invalid [90004] x 9 
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+	http://localhost:3350/sitemap.xml (200 OK)
+	http://localhost:3350 (200 OK)
+	http://localhost:3350/robots.txt (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 10	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 58

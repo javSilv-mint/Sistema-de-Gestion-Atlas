@@ -1,0 +1,25 @@
+### Cliente eliminado por la prueba CP-12 (id=5): filas restantes
+ filas 
+-------
+     0
+(1 row)
+
+### Columnas de la tabla clientes (¿existe estado/eliminado?)
+                                                                                                                                                                                                            string_agg                                                                                                                                                                                                            
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ id, nombre, correo, telefono, direccion, es_empresa, rut, nombre_fantasia, giro_actividad_economica, nombre_representante, cargo_representante, correo_representante, telefono_representante, relacion_representante, direccion_calle, direccion_numero, direccion_ciudad, direccion_region, sitio_web, telefono_corporativo, nombre_banco, numero_cuenta, titular_cuenta, metodo_pago, dia_pago, moneda, empresa_id, created_at
+(1 row)
+
+### Registros de auditoría insertados sin usuario autenticado
+ id | usuario_id | accion 
+----+------------+--------
+(0 rows)
+
+### Contraseña del usuario registrado por la prueba
+       nombre_usuario       | contrasena_hash 
+----------------------------+-----------------
+ qa_escalada_1794431453156  | Escalada#2026
+ qa_debil_1794431448904     | 123
+ qa_empresa_b_1794431416501 | Qa#Atlas2026!
+(3 rows)
+

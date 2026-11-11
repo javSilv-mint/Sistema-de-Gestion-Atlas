@@ -1,0 +1,450 @@
+newman
+
+Atlas EP5 - Pruebas automatizadas funcionales y de seguridad
+
+Folder 00 Preparación de datos
+Sub-folder PREP Login administrador (admin)
+  POST http://localhost:4450/autenticacion/login [200 OK, 513B, 4s]
+  Pass  Responde HTTP 200
+
+Sub-folder PREP Login editor (editor)
+  POST http://localhost:4450/autenticacion/login [200 OK, 515B, 4s]
+  Pass  Responde HTTP 200
+
+Sub-folder PREP Registrar empresa B (segundo tenant)
+  POST http://localhost:4450/empresas [201 Created, 603B, 8ms]
+  Pass  Responde HTTP 201
+
+Sub-folder PREP Login usuario empresa B
+  POST http://localhost:4450/autenticacion/login [200 OK, 542B, 4s]
+  Pass  Responde HTTP 200
+
+Folder 01 Pruebas funcionales (API)
+Sub-folder [CP-01] Inicio de sesión exitoso entrega JWT válido
+  POST http://localhost:4450/autenticacion/login [200 OK, 513B, 4s]
+  Pass  Responde HTTP 200
+  Pass  La respuesta contiene un JWT con 3 segmentos
+  -
+  | `Using "atob" is deprecated. Use "require('atob')" ins
+  | tead.`
+  -
+  Pass  El JWT incluye empresaId y expira en ≤ 2 h
+
+Sub-folder [CP-02] Credenciales inválidas son rechazadas
+  POST http://localhost:4450/autenticacion/login [401 Unauthorized, 312B, 4s]
+  Pass  Responde HTTP 401
+  Pass  No entrega token
+
+Sub-folder [CP-10] Crear cliente con datos válidos
+  POST http://localhost:4450/clientes [201 Created, 990B, 7ms]
+  Pass  Responde HTTP 201
+  1. Cliente queda asociado a la empresa del token (RB-2)
+
+Sub-folder [CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos
+  POST http://localhost:4450/clientes [201 Created, 900B, 6ms]
+  2. Responde HTTP 400 con detalle de validación (RF-4.3)
+
+Sub-folder [CP-11] Listar clientes de la empresa
+  GET http://localhost:4450/clientes [200 OK, 3.5kB, 4s]
+  Pass  Responde HTTP 200
+  3. Devuelve arreglo solo con clientes de la empresa 1
+
+Sub-folder [CP-11b] Buscar cliente por nombre
+  GET http://localhost:4450/clientes/search?name=Cliente QA [200 OK, 987B, 7ms]
+  Pass  Responde HTTP 200
+  Pass  Encuentra el cliente creado
+
+Sub-folder [CP-14] Crear contrato con documento PDF asociado a un cliente
+  POST http://localhost:4450/contratos [201 Created, 506B, 16ms]
+  Pass  Responde HTTP 201
+
+Sub-folder [CP-14b] Rechazar contrato con fecha de término anterior a la de inicio
+  POST http://localhost:4450/contratos [201 Created, 478B, 5ms]
+  4. Responde HTTP 400 por rango de fechas inválido
+
+Sub-folder [CP-16] Descargar documento del contrato (usuario autorizado)
+  GET http://localhost:4450/contratos/3/file [200 OK, 499B, 6ms]
+  Pass  Responde HTTP 200
+  Pass  Content-Type application/pdf
+
+Sub-folder [CP-17] Listar contratos con estado calculado
+  GET http://localhost:4450/contratos [200 OK, 1.29kB, 4s]
+  Pass  Responde HTTP 200
+  5. Cada contrato informa su estado (activo / por vencer / expirado)
+
+Sub-folder [CP-12] Crear cliente desechable para prueba de eliminación
+  POST http://localhost:4450/clientes [201 Created, 996B, 5ms]
+  Pass  Responde HTTP 201
+
+Sub-folder [CP-12] Eliminar cliente (debe ser eliminación lógica)
+  DELETE http://localhost:4450/clientes/5 [200 OK, 283B, 5ms]
+  Pass  Responde 200/204
+  6. La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico
+
+Folder 02 Seguridad - Autenticación y sesión (OWASP A07/A02)
+Sub-folder [SEC-AUT-01] Inyección SQL en login es rechazada
+  POST http://localhost:4450/autenticacion/login [401 Unauthorized, 312B, 4s]
+  Pass  Responde 401 (consultas parametrizadas)
+
+Sub-folder [SEC-AUT-02] JWT con algoritmo 'none' es rechazado
+  -
+  | `Using "CryptoJS" is deprecated. Use "require('crypto-
+  | js')" instead.`
+  -
+  GET http://localhost:4450/clientes [401 Unauthorized, 351B, 4s]
+  Pass  Responde 401 ante token sin firma
+
+Sub-folder [SEC-AUT-03] JWT forjado con secreto por defecto es rechazado
+  -
+  | `Using "CryptoJS" is deprecated. Use "require('crypto-
+  | js')" instead.`
+  -
+  GET http://localhost:4450/clientes [200 OK, 3.5kB, 4s]
+  7. Responde 401 (el secreto JWT no debe ser el valor por defecto público)
+
+Sub-folder [CP-05] Registro con contraseña débil es rechazado
+  POST http://localhost:4450/empresas [201 Created, 610B, 4ms]
+  8. Responde 400 por no cumplir política de contraseñas (NFR-SEG-2)
+
+Sub-folder [CP-03] Existe endpoint de cierre de sesión con revocación del token
+  POST http://localhost:4450/autenticacion/logout [404 Not Found, 464B, 3ms]
+  9. Responde 200/204 (logout implementado en servidor)
+
+Folder 03 Seguridad - Control de acceso y aislamiento (OWASP A01)
+Sub-folder [CP-20a] GET /contratos/:id sin token
+  GET http://localhost:4450/contratos/1 [200 OK, 507B, 3ms]
+ 10. Sin token responde 401/403
+
+Sub-folder [CP-20b] GET /contratos/:id/file sin token (descarga de documento)
+  GET http://localhost:4450/contratos/3/file [200 OK, 499B, 3ms]
+ 11. Sin token responde 401/403
+
+Sub-folder [CP-20c] GET /usuarios/:id sin token
+  GET http://localhost:4450/usuarios/1 [200 OK, 374B, 2ms]
+ 12. Sin token responde 401/403
+
+Sub-folder [CP-20d] GET /empresas sin token
+  GET http://localhost:4450/empresas [200 OK, 792B, 3ms]
+ 13. Sin token responde 401/403
+
+Sub-folder [CP-20e] GET /roles sin token
+  GET http://localhost:4450/roles [200 OK, 333B, 2ms]
+ 14. Sin token responde 401/403
+
+Sub-folder [CP-20f] GET /auditoria sin token
+  GET http://localhost:4450/auditoria [200 OK, 1.57kB, 2ms]
+ 15. Sin token responde 401/403
+
+Sub-folder [CP-20g] GET /empresa-usuarios/:id sin token
+  GET http://localhost:4450/empresa-usuarios/1 [200 OK, 364B, 3ms]
+ 16. Sin token responde 401/403
+
+Sub-folder [CP-20h] POST /auditoria sin token (inyección de registros falsos)
+  POST http://localhost:4450/auditoria [500 Internal Server Error, 422B, 6ms]
+ 17. Sin token responde 401/403
+
+Sub-folder [CP-20i] POST /contratos sin token
+  POST http://localhost:4450/contratos [500 Internal Server Error, 423B, 14ms]
+ 18. Sin token responde 401/403
+
+Sub-folder [CP-20j] DELETE /contratos/:id sin token
+  DELETE http://localhost:4450/contratos/999999 [404 Not Found, 299B, 10ms]
+  Pass  Sin token responde 401/403
+
+Sub-folder [CP-20k] GET /clientes sin token (control existente)
+  GET http://localhost:4450/clientes [401 Unauthorized, 351B, 4s]
+  Pass  Sin token responde 401/403
+
+Sub-folder [CP-08a] Editor no puede crear clientes vía API
+  POST http://localhost:4450/clientes [201 Created, 1kB, 7ms]
+ 19. Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura)
+
+Sub-folder [CP-08b] Editor no puede eliminar clientes vía API
+  DELETE http://localhost:4450/clientes/6 [200 OK, 283B, 3ms]
+ 20. Responde 403 (rol editor)
+
+Sub-folder [CP-07] Editor no puede crear usuarios con rol administrador
+  POST http://localhost:4450/empresa-usuarios [201 Created, 369B, 7ms]
+ 21. Responde 403 (escalamiento de privilegios)
+
+Sub-folder [CP-13a] Empresa B no ve clientes de empresa A (control existente)
+  GET http://localhost:4450/clientes/1 [404 Not Found, 299B, 3ms]
+  Pass  Responde 403/404 a recurso de otra empresa
+
+Sub-folder [CP-13b] Empresa B no puede leer contratos de empresa A
+  GET http://localhost:4450/contratos/1 [200 OK, 507B, 2ms]
+ 22. Responde 403/404 a recurso de otra empresa (RB-2)
+
+Sub-folder [CP-13c] Empresa B no puede descargar documentos de empresa A
+  GET http://localhost:4450/contratos/3/file [200 OK, 499B, 4ms]
+ 23. Responde 403/404 a documento de otra empresa (RB-2)
+
+Sub-folder [CP-13d] Empresa B no puede leer datos de empresa A
+  GET http://localhost:4450/empresas/1 [200 OK, 444B, 2ms]
+ 24. Responde 403/404 a datos de otra empresa
+
+Sub-folder [CP-19] Auditoría de empresa B no expone eventos de empresa A
+  GET http://localhost:4450/auditoria [200 OK, 1.99kB, 2ms]
+ 25. No contiene acciones de los usuarios admin/editor de la empresa A
+
+Folder 04 Seguridad - Configuración, errores y archivos (OWASP A04/A05)
+Sub-folder [CP-23a] Cabeceras de seguridad HTTP presentes
+  GET http://localhost:4450/ [200 OK, 297B, 1ms]
+ 26. X-Content-Type-Options: nosniff
+ 27. Content-Security-Policy definida
+ 28. Strict-Transport-Security definida (HSTS)
+ 29. No revela tecnología (sin X-Powered-By)
+
+Sub-folder [CP-23b] CORS no acepta orígenes arbitrarios
+  GET http://localhost:4450/ [200 OK, 297B, 2ms]
+ 30. Access-Control-Allow-Origin no es * ni el origen atacante
+
+Sub-folder [CP-24] Errores no exponen detalles internos (SQL/stack)
+  GET http://localhost:4450/clientes/abc [500 Internal Server Error, 378B, 3ms]
+ 31. Respuesta sin mensajes del motor de base de datos
+
+Sub-folder [CP-15] Carga de archivo no permitido (.exe) es rechazada
+  POST http://localhost:4450/contratos [201 Created, 475B, 15ms]
+ 32. Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG)
+
+Sub-folder [CP-24b] Documentación Swagger no expuesta públicamente en producción
+  GET http://localhost:4450/docs/ [200 OK, 3.37kB, 3ms]
+ 33. /docs responde 401/403/404 con NODE_ENV=production
+
+Folder 05 Rendimiento por petición (NFR-PERF-1 < 300 ms)
+Sub-folder [CP-27a] GET / (salud de la API)
+  GET http://localhost:4450/ [200 OK, 297B, 3ms]
+  Pass  Responde HTTP 200
+  Pass  Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+Sub-folder [CP-27b] POST /autenticacion/login
+  POST http://localhost:4450/autenticacion/login [200 OK, 513B, 4s]
+  Pass  Responde HTTP 200
+ 34. Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+Sub-folder [CP-27c] GET /clientes
+  GET http://localhost:4450/clientes [200 OK, 3.5kB, 4s]
+  Pass  Responde HTTP 200
+ 35. Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+Sub-folder [CP-27d] GET /contratos
+  GET http://localhost:4450/contratos [200 OK, 1.75kB, 4s]
+  Pass  Responde HTTP 200
+ 36. Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+Sub-folder [CP-27e] GET /metricas
+  GET http://localhost:4450/metricas [200 OK, 523B, 4s]
+  Pass  Responde HTTP 200
+ 37. Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+Sub-folder [CP-27f] GET /clientes/:id
+  GET http://localhost:4450/clientes/3 [200 OK, 985B, 3ms]
+  Pass  Responde HTTP 200
+  Pass  Tiempo de respuesta < 300 ms (NFR-PERF-1)
+
+-------------------------------------------------------------------
+|                         |          executed |            failed |
+--------------------------+-------------------+--------------------
+|              iterations |                 1 |                 0 |
+--------------------------+-------------------+--------------------
+|                requests |                51 |                 0 |
+--------------------------+-------------------+--------------------
+|            test-scripts |                51 |                 0 |
+--------------------------+-------------------+--------------------
+|      prerequest-scripts |                 6 |                 0 |
+--------------------------+-------------------+--------------------
+|              assertions |                69 |                37 |
+-------------------------------------------------------------------
+| total run duration: 1m 1.1s                                     |
+-------------------------------------------------------------------
+| total data received: 28.38kB (approx)                           |
+-------------------------------------------------------------------
+| average response time: 1183ms [min: 1ms, max: 4s, s.d.: 1826ms] |
+-------------------------------------------------------------------
+
+[31m   # [39m[31m failure        [39m[31m detail                                                                                                                                            [39m
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 01.  AssertionError  Cliente queda asociado a la empresa del token (RB-2)                                                                                              
+                      expected '1' to deeply equal 1                                                                                                                    
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-10] Crear cliente con datos válidos"                                                                   
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 02.  AssertionError  Responde HTTP 400 con detalle de validación (RF-4.3)                                                                                              
+                      expected response to have status code 400 but got 201                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos"                                            
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 03.  AssertionError  Devuelve arreglo solo con clientes de la empresa 1                                                                                                
+                      expected '1' to deeply equal 1                                                                                                                    
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-11] Listar clientes de la empresa"                                                                     
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 04.  AssertionError  Responde HTTP 400 por rango de fechas inválido                                                                                                    
+                      expected response to have status code 400 but got 201                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-14b] Rechazar contrato con fecha de término anterior a la de inicio"                                   
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 05.  AssertionError  Cada contrato informa su estado (activo / por vencer / expirado)                                                                                  
+                      contrato 4 sin campo estado: expected undefined to exist                                                                                          
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-17] Listar contratos con estado calculado"                                                             
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 06.  AssertionError  La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico                                                                     
+                      expected '{"deleted":true}' to match /eliminado|inactivo|deleted_at|estado/i                                                                      
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "01 Pruebas funcionales (API) / [CP-12] Eliminar cliente (debe ser eliminación lógica)"                                                    
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 07.  AssertionError  Responde 401 (el secreto JWT no debe ser el valor por defecto público)                                                                            
+                      expected response to have status code 401 but got 200                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [SEC-AUT-03] JWT forjado con secreto por defecto es rechazado"                    
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 08.  AssertionError  Responde 400 por no cumplir política de contraseñas (NFR-SEG-2)                                                                                   
+                      expected response to have status code 400 but got 201                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-05] Registro con contraseña débil es rechazado"                               
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 09.  AssertionError  Responde 200/204 (logout implementado en servidor)                                                                                                
+                      expected 404 to be one of [ 200, 204 ]                                                                                                            
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "02 Seguridad - Autenticación y sesión (OWASP A07/A02) / [CP-03] Existe endpoint de cierre de sesión con revocación del token"             
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 10.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20a] GET /contratos/:id sin token"                                       
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 11.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20b] GET /contratos/:id/file sin token (descarga de documento)"          
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 12.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20c] GET /usuarios/:id sin token"                                        
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 13.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20d] GET /empresas sin token"                                            
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 14.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20e] GET /roles sin token"                                               
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 15.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20f] GET /auditoria sin token"                                           
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 16.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20g] GET /empresa-usuarios/:id sin token"                                
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 17.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20h] POST /auditoria sin token (inyección de registros falsos)"          
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 18.  AssertionError  Sin token responde 401/403                                                                                                                        
+                      Se esperaba 401/403/404 y se obtuvo 500: expected 500 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-20i] POST /contratos sin token"                                          
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 19.  AssertionError  Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura)                                                                                 
+                      expected response to have status code 403 but got 201                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08a] Editor no puede crear clientes vía API"                             
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 20.  AssertionError  Responde 403 (rol editor)                                                                                                                         
+                      expected response to have status code 403 but got 200                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-08b] Editor no puede eliminar clientes vía API"                          
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 21.  AssertionError  Responde 403 (escalamiento de privilegios)                                                                                                        
+                      expected response to have status code 403 but got 201                                                                                             
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-07] Editor no puede crear usuarios con rol administrador"                
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 22.  AssertionError  Responde 403/404 a recurso de otra empresa (RB-2)                                                                                                 
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13b] Empresa B no puede leer contratos de empresa A"                     
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 23.  AssertionError  Responde 403/404 a documento de otra empresa (RB-2)                                                                                               
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13c] Empresa B no puede descargar documentos de empresa A"               
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 24.  AssertionError  Responde 403/404 a datos de otra empresa                                                                                                          
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-13d] Empresa B no puede leer datos de empresa A"                         
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 25.  AssertionError  No contiene acciones de los usuarios admin/editor de la empresa A                                                                                 
+                      12 eventos de otra empresa expuestos: expected 12 to deeply equal +0                                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "03 Seguridad - Control de acceso y aislamiento (OWASP A01) / [CP-19] Auditoría de empresa B no expone eventos de empresa A"               
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 26.  AssertionError  X-Content-Type-Options: nosniff                                                                                                                   
+                      expected undefined to deeply equal 'nosniff'                                                                                                      
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes"                        
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 27.  AssertionError  Content-Security-Policy definida                                                                                                                  
+                      expected false to be true                                                                                                                         
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes"                        
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 28.  AssertionError  Strict-Transport-Security definida (HSTS)                                                                                                         
+                      expected false to be true                                                                                                                         
+                      at assertion:2 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes"                        
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 29.  AssertionError  No revela tecnología (sin X-Powered-By)                                                                                                           
+                      expected true to be false                                                                                                                         
+                      at assertion:3 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23a] Cabeceras de seguridad HTTP presentes"                        
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 30.  AssertionError  Access-Control-Allow-Origin no es * ni el origen atacante                                                                                         
+                      ACAO = *: expected true to be false                                                                                                               
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-23b] CORS no acepta orígenes arbitrarios"                          
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 31.  AssertionError  Respuesta sin mensajes del motor de base de datos                                                                                                 
+                      expected '{"error":"Error al obtener cliente","…' not to match /invalid input syntax|syntax error|postgres|pg_|at .*\.js/i                        
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24] Errores no exponen detalles internos (SQL/stack)"              
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 32.  AssertionError  Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG)                                                                                           
+                      expected 201 to be one of [ 400, 415 ]                                                                                                            
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-15] Carga de archivo no permitido (.exe) es rechazada"             
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 33.  AssertionError  /docs responde 401/403/404 con NODE_ENV=production                                                                                                
+                      Se esperaba 401/403/404 y se obtuvo 200: expected 200 to be one of [ 401, 403, 404 ]                                                              
+                      at assertion:0 in test-script                                                                                                                     
+                      inside "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05) / [CP-24b] Documentación Swagger no expuesta públicamente en producción" 
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 34.  AssertionError  Tiempo de respuesta < 300 ms (NFR-PERF-1)                                                                                                         
+                      expected 4010 to be below 300                                                                                                                     
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27b] POST /autenticacion/login"                                                   
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 35.  AssertionError  Tiempo de respuesta < 300 ms (NFR-PERF-1)                                                                                                         
+                      expected 4006 to be below 300                                                                                                                     
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27c] GET /clientes"                                                               
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 36.  AssertionError  Tiempo de respuesta < 300 ms (NFR-PERF-1)                                                                                                         
+                      expected 4007 to be below 300                                                                                                                     
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27d] GET /contratos"                                                              
+[90m     [39m[90m                [39m[90m                                                                                                                                                   [39m
+ 37.  AssertionError  Tiempo de respuesta < 300 ms (NFR-PERF-1)                                                                                                         
+                      expected 4010 to be below 300                                                                                                                     
+                      at assertion:1 in test-script                                                                                                                     
+                      inside "05 Rendimiento por petición (NFR-PERF-1 < 300 ms) / [CP-27e] GET /metricas"                                                               

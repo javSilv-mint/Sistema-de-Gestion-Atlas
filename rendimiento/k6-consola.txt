@@ -1,0 +1,361 @@
+Unable to find image 'grafana/k6:latest' locally
+latest: Pulling from grafana/k6
+4f4fb700ef54: Pulling fs layer
+699240e0b337: Pulling fs layer
+2b28f25602d4: Pulling fs layer
+55afa1ecc21d: Pulling fs layer
+4f4fb700ef54: Already exists
+2b28f25602d4: Download complete
+55afa1ecc21d: Download complete
+935631f8a8f2: Download complete
+44136fa355b3: Already exists
+699240e0b337: Download complete
+2b28f25602d4: Pull complete
+55afa1ecc21d: Pull complete
+4f4fb700ef54: Pull complete
+699240e0b337: Pull complete
+Digest: sha256:3e4186aea62e11a45560bfc51e19eeafe82fc07ce069c78aff44b7ff893d9a5e
+Status: Downloaded newer image for grafana/k6:latest
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /scripts/carga_atlas.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 200 max VUs, 1m40s max duration (incl. graceful stop):
+              * concurrencia: Up to 200 looping VUs for 1m30s over 4 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run            [ 100% ] setup()
+concurrencia   [   0% ]
+
+Run            [ 100% ] setup()
+concurrencia   [   0% ]
+
+Run            [ 100% ] setup()
+concurrencia   [   0% ]
+
+Run            [ 100% ] setup()
+concurrencia   [   0% ]
+
+running (0m05.0s), 002/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   1% ] 002/200 VUs  0m00.9s/1m30.0s
+
+running (0m06.0s), 004/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   2% ] 004/200 VUs  0m01.9s/1m30.0s
+
+running (0m07.0s), 007/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   3% ] 007/200 VUs  0m02.9s/1m30.0s
+
+running (0m08.0s), 009/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   4% ] 009/200 VUs  0m03.9s/1m30.0s
+
+running (0m09.0s), 012/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   5% ] 012/200 VUs  0m04.9s/1m30.0s
+
+running (0m10.0s), 014/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   7% ] 014/200 VUs  0m05.9s/1m30.0s
+
+running (0m11.0s), 017/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   8% ] 017/200 VUs  0m06.9s/1m30.0s
+
+running (0m12.0s), 019/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [   9% ] 019/200 VUs  0m07.9s/1m30.0s
+
+running (0m13.0s), 022/200 VUs, 0 complete and 0 interrupted iterations
+concurrencia   [  10% ] 022/200 VUs  0m08.9s/1m30.0s
+
+running (0m14.0s), 024/200 VUs, 2 complete and 0 interrupted iterations
+concurrencia   [  11% ] 024/200 VUs  0m09.9s/1m30.0s
+
+running (0m15.0s), 027/200 VUs, 4 complete and 0 interrupted iterations
+concurrencia   [  12% ] 027/200 VUs  0m10.9s/1m30.0s
+
+running (0m16.0s), 029/200 VUs, 6 complete and 0 interrupted iterations
+concurrencia   [  13% ] 029/200 VUs  0m11.9s/1m30.0s
+
+running (0m17.0s), 032/200 VUs, 6 complete and 0 interrupted iterations
+concurrencia   [  14% ] 032/200 VUs  0m12.9s/1m30.0s
+
+running (0m18.0s), 034/200 VUs, 9 complete and 0 interrupted iterations
+concurrencia   [  15% ] 034/200 VUs  0m13.9s/1m30.0s
+
+running (0m19.0s), 037/200 VUs, 11 complete and 0 interrupted iterations
+concurrencia   [  17% ] 037/200 VUs  0m14.9s/1m30.0s
+
+running (0m20.0s), 039/200 VUs, 13 complete and 0 interrupted iterations
+concurrencia   [  18% ] 039/200 VUs  0m15.9s/1m30.0s
+
+running (0m21.0s), 042/200 VUs, 17 complete and 0 interrupted iterations
+concurrencia   [  19% ] 042/200 VUs  0m16.9s/1m30.0s
+
+running (0m22.0s), 044/200 VUs, 19 complete and 0 interrupted iterations
+concurrencia   [  20% ] 044/200 VUs  0m17.9s/1m30.0s
+
+running (0m23.0s), 047/200 VUs, 23 complete and 0 interrupted iterations
+concurrencia   [  21% ] 047/200 VUs  0m18.9s/1m30.0s
+
+running (0m24.0s), 049/200 VUs, 29 complete and 0 interrupted iterations
+concurrencia   [  22% ] 049/200 VUs  0m19.9s/1m30.0s
+
+running (0m25.0s), 057/200 VUs, 32 complete and 0 interrupted iterations
+concurrencia   [  23% ] 057/200 VUs  0m20.9s/1m30.0s
+
+running (0m26.0s), 064/200 VUs, 36 complete and 0 interrupted iterations
+concurrencia   [  24% ] 064/200 VUs  0m21.9s/1m30.0s
+
+running (0m27.0s), 072/200 VUs, 40 complete and 0 interrupted iterations
+concurrencia   [  25% ] 072/200 VUs  0m22.9s/1m30.0s
+
+running (0m28.0s), 079/200 VUs, 46 complete and 0 interrupted iterations
+concurrencia   [  27% ] 079/200 VUs  0m23.9s/1m30.0s
+
+running (0m29.0s), 087/200 VUs, 51 complete and 0 interrupted iterations
+concurrencia   [  28% ] 087/200 VUs  0m24.9s/1m30.0s
+
+running (0m30.0s), 094/200 VUs, 58 complete and 0 interrupted iterations
+concurrencia   [  29% ] 094/200 VUs  0m25.9s/1m30.0s
+
+running (0m31.0s), 102/200 VUs, 61 complete and 0 interrupted iterations
+concurrencia   [  30% ] 102/200 VUs  0m26.9s/1m30.0s
+
+running (0m32.0s), 109/200 VUs, 68 complete and 0 interrupted iterations
+concurrencia   [  31% ] 109/200 VUs  0m27.9s/1m30.0s
+
+running (0m33.0s), 117/200 VUs, 76 complete and 0 interrupted iterations
+concurrencia   [  32% ] 117/200 VUs  0m28.9s/1m30.0s
+
+running (0m34.0s), 124/200 VUs, 86 complete and 0 interrupted iterations
+concurrencia   [  33% ] 124/200 VUs  0m29.9s/1m30.0s
+
+running (0m35.0s), 132/200 VUs, 96 complete and 0 interrupted iterations
+concurrencia   [  34% ] 132/200 VUs  0m30.9s/1m30.0s
+
+running (0m36.0s), 139/200 VUs, 107 complete and 0 interrupted iterations
+concurrencia   [  35% ] 139/200 VUs  0m31.9s/1m30.0s
+
+running (0m37.0s), 147/200 VUs, 119 complete and 0 interrupted iterations
+concurrencia   [  37% ] 147/200 VUs  0m32.9s/1m30.0s
+
+running (0m38.0s), 154/200 VUs, 129 complete and 0 interrupted iterations
+concurrencia   [  38% ] 154/200 VUs  0m33.9s/1m30.0s
+
+running (0m39.0s), 162/200 VUs, 146 complete and 0 interrupted iterations
+concurrencia   [  39% ] 162/200 VUs  0m34.9s/1m30.0s
+
+running (0m40.0s), 169/200 VUs, 154 complete and 0 interrupted iterations
+concurrencia   [  40% ] 169/200 VUs  0m35.9s/1m30.0s
+
+running (0m41.0s), 177/200 VUs, 170 complete and 0 interrupted iterations
+concurrencia   [  41% ] 177/200 VUs  0m36.9s/1m30.0s
+
+running (0m42.0s), 184/200 VUs, 183 complete and 0 interrupted iterations
+concurrencia   [  42% ] 184/200 VUs  0m37.9s/1m30.0s
+
+running (0m43.0s), 192/200 VUs, 202 complete and 0 interrupted iterations
+concurrencia   [  43% ] 192/200 VUs  0m38.9s/1m30.0s
+
+running (0m44.0s), 199/200 VUs, 220 complete and 0 interrupted iterations
+concurrencia   [  44% ] 199/200 VUs  0m39.9s/1m30.0s
+
+running (0m45.0s), 200/200 VUs, 240 complete and 0 interrupted iterations
+concurrencia   [  45% ] 200/200 VUs  0m40.9s/1m30.0s
+
+running (0m46.0s), 200/200 VUs, 258 complete and 0 interrupted iterations
+concurrencia   [  47% ] 200/200 VUs  0m41.9s/1m30.0s
+
+running (0m47.0s), 200/200 VUs, 277 complete and 0 interrupted iterations
+concurrencia   [  48% ] 200/200 VUs  0m42.9s/1m30.0s
+
+running (0m48.0s), 200/200 VUs, 301 complete and 0 interrupted iterations
+concurrencia   [  49% ] 200/200 VUs  0m43.9s/1m30.0s
+
+running (0m49.0s), 200/200 VUs, 315 complete and 0 interrupted iterations
+concurrencia   [  50% ] 200/200 VUs  0m44.9s/1m30.0s
+
+running (0m50.0s), 200/200 VUs, 340 complete and 0 interrupted iterations
+concurrencia   [  51% ] 200/200 VUs  0m45.9s/1m30.0s
+
+running (0m51.0s), 200/200 VUs, 360 complete and 0 interrupted iterations
+concurrencia   [  52% ] 200/200 VUs  0m46.9s/1m30.0s
+
+running (0m52.0s), 200/200 VUs, 380 complete and 0 interrupted iterations
+concurrencia   [  53% ] 200/200 VUs  0m47.9s/1m30.0s
+
+running (0m53.0s), 200/200 VUs, 405 complete and 0 interrupted iterations
+concurrencia   [  54% ] 200/200 VUs  0m48.9s/1m30.0s
+
+running (0m54.0s), 200/200 VUs, 428 complete and 0 interrupted iterations
+concurrencia   [  55% ] 200/200 VUs  0m49.9s/1m30.0s
+
+running (0m55.0s), 200/200 VUs, 445 complete and 0 interrupted iterations
+concurrencia   [  57% ] 200/200 VUs  0m50.9s/1m30.0s
+
+running (0m56.0s), 200/200 VUs, 468 complete and 0 interrupted iterations
+concurrencia   [  58% ] 200/200 VUs  0m51.9s/1m30.0s
+
+running (0m57.0s), 200/200 VUs, 494 complete and 0 interrupted iterations
+concurrencia   [  59% ] 200/200 VUs  0m52.9s/1m30.0s
+
+running (0m58.0s), 200/200 VUs, 508 complete and 0 interrupted iterations
+concurrencia   [  60% ] 200/200 VUs  0m53.9s/1m30.0s
+
+running (0m59.0s), 200/200 VUs, 534 complete and 0 interrupted iterations
+concurrencia   [  61% ] 200/200 VUs  0m54.9s/1m30.0s
+
+running (1m00.0s), 200/200 VUs, 553 complete and 0 interrupted iterations
+concurrencia   [  62% ] 200/200 VUs  0m55.9s/1m30.0s
+
+running (1m01.0s), 200/200 VUs, 573 complete and 0 interrupted iterations
+concurrencia   [  63% ] 200/200 VUs  0m56.9s/1m30.0s
+
+running (1m02.0s), 200/200 VUs, 596 complete and 0 interrupted iterations
+concurrencia   [  64% ] 200/200 VUs  0m57.9s/1m30.0s
+
+running (1m03.0s), 200/200 VUs, 618 complete and 0 interrupted iterations
+concurrencia   [  65% ] 200/200 VUs  0m58.9s/1m30.0s
+
+running (1m04.0s), 200/200 VUs, 636 complete and 0 interrupted iterations
+concurrencia   [  67% ] 200/200 VUs  0m59.9s/1m30.0s
+
+running (1m05.0s), 200/200 VUs, 658 complete and 0 interrupted iterations
+concurrencia   [  68% ] 200/200 VUs  1m00.9s/1m30.0s
+
+running (1m06.0s), 200/200 VUs, 681 complete and 0 interrupted iterations
+concurrencia   [  69% ] 200/200 VUs  1m01.9s/1m30.0s
+
+running (1m07.0s), 200/200 VUs, 695 complete and 0 interrupted iterations
+concurrencia   [  70% ] 200/200 VUs  1m02.9s/1m30.0s
+
+running (1m08.0s), 200/200 VUs, 721 complete and 0 interrupted iterations
+concurrencia   [  71% ] 200/200 VUs  1m03.9s/1m30.0s
+
+running (1m09.0s), 200/200 VUs, 740 complete and 0 interrupted iterations
+concurrencia   [  72% ] 200/200 VUs  1m04.9s/1m30.0s
+
+running (1m10.0s), 200/200 VUs, 764 complete and 0 interrupted iterations
+concurrencia   [  73% ] 200/200 VUs  1m05.9s/1m30.0s
+
+running (1m11.0s), 200/200 VUs, 787 complete and 0 interrupted iterations
+concurrencia   [  74% ] 200/200 VUs  1m06.9s/1m30.0s
+
+running (1m12.0s), 200/200 VUs, 807 complete and 0 interrupted iterations
+concurrencia   [  75% ] 200/200 VUs  1m07.9s/1m30.0s
+
+running (1m13.0s), 200/200 VUs, 824 complete and 0 interrupted iterations
+concurrencia   [  77% ] 200/200 VUs  1m08.9s/1m30.0s
+
+running (1m14.0s), 200/200 VUs, 845 complete and 0 interrupted iterations
+concurrencia   [  78% ] 200/200 VUs  1m09.9s/1m30.0s
+
+running (1m15.0s), 200/200 VUs, 868 complete and 0 interrupted iterations
+concurrencia   [  79% ] 200/200 VUs  1m10.9s/1m30.0s
+
+running (1m16.0s), 200/200 VUs, 884 complete and 0 interrupted iterations
+concurrencia   [  80% ] 200/200 VUs  1m11.9s/1m30.0s
+
+running (1m17.0s), 200/200 VUs, 911 complete and 0 interrupted iterations
+concurrencia   [  81% ] 200/200 VUs  1m12.9s/1m30.0s
+
+running (1m18.0s), 200/200 VUs, 933 complete and 0 interrupted iterations
+concurrencia   [  82% ] 200/200 VUs  1m13.9s/1m30.0s
+
+running (1m19.0s), 200/200 VUs, 957 complete and 0 interrupted iterations
+concurrencia   [  83% ] 200/200 VUs  1m14.9s/1m30.0s
+
+running (1m20.0s), 200/200 VUs, 981 complete and 0 interrupted iterations
+concurrencia   [  84% ] 200/200 VUs  1m15.9s/1m30.0s
+
+running (1m21.0s), 200/200 VUs, 1000 complete and 0 interrupted iterations
+concurrencia   [  85% ] 200/200 VUs  1m16.9s/1m30.0s
+
+running (1m22.0s), 200/200 VUs, 1016 complete and 0 interrupted iterations
+concurrencia   [  87% ] 200/200 VUs  1m17.9s/1m30.0s
+
+running (1m23.0s), 200/200 VUs, 1037 complete and 0 interrupted iterations
+concurrencia   [  88% ] 200/200 VUs  1m18.9s/1m30.0s
+
+running (1m24.0s), 200/200 VUs, 1061 complete and 0 interrupted iterations
+concurrencia   [  89% ] 200/200 VUs  1m19.9s/1m30.0s
+
+running (1m25.0s), 200/200 VUs, 1078 complete and 0 interrupted iterations
+concurrencia   [  90% ] 200/200 VUs  1m20.9s/1m30.0s
+
+running (1m26.0s), 197/200 VUs, 1104 complete and 0 interrupted iterations
+concurrencia   [  91% ] 197/200 VUs  1m21.9s/1m30.0s
+
+running (1m27.0s), 191/200 VUs, 1124 complete and 0 interrupted iterations
+concurrencia   [  92% ] 191/200 VUs  1m22.9s/1m30.0s
+
+running (1m28.0s), 179/200 VUs, 1149 complete and 0 interrupted iterations
+concurrencia   [  93% ] 179/200 VUs  1m23.9s/1m30.0s
+
+running (1m29.0s), 169/200 VUs, 1172 complete and 0 interrupted iterations
+concurrencia   [  94% ] 169/200 VUs  1m24.9s/1m30.0s
+
+running (1m30.0s), 163/200 VUs, 1191 complete and 0 interrupted iterations
+concurrencia   [  95% ] 163/200 VUs  1m25.9s/1m30.0s
+
+running (1m31.0s), 153/200 VUs, 1210 complete and 0 interrupted iterations
+concurrencia   [  97% ] 153/200 VUs  1m26.9s/1m30.0s
+
+running (1m32.0s), 139/200 VUs, 1230 complete and 0 interrupted iterations
+concurrencia   [  98% ] 139/200 VUs  1m27.9s/1m30.0s
+
+running (1m33.0s), 119/200 VUs, 1254 complete and 0 interrupted iterations
+concurrencia   [  99% ] 119/200 VUs  1m28.9s/1m30.0s
+
+running (1m34.0s), 101/200 VUs, 1273 complete and 0 interrupted iterations
+concurrencia   [ 100% ] 101/200 VUs  1m29.9s/1m30.0s
+
+running (1m35.0s), 080/200 VUs, 1294 complete and 0 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m36.0s), 065/200 VUs, 1307 complete and 2 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m37.0s), 048/200 VUs, 1323 complete and 3 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m38.0s), 039/200 VUs, 1332 complete and 3 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m39.0s), 026/200 VUs, 1344 complete and 4 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m40.0s), 015/200 VUs, 1353 complete and 6 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m41.0s), 009/200 VUs, 1358 complete and 7 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m42.0s), 003/200 VUs, 1363 complete and 8 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m43.0s), 002/200 VUs, 1363 complete and 9 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+
+running (1m44.0s), 001/200 VUs, 1363 complete and 10 interrupted iterations
+concurrencia ↓ [ 100% ] 100/200 VUs  1m30s
+==== RESUMEN k6 ATLAS ====
+VUs máx: 200  peticiones: 4269  tasa: 41.1/s
+Errores HTTP: 0.00 %
+Listar clientes   avg=4003ms p95=4004ms max=4012ms
+Obtener cliente   avg=2ms p95=3ms max=10ms
+Listar contratos  avg=4002ms p95=4004ms max=4011ms
+Login             avg=4004ms p95=4005ms max=4081ms
+Umbrales:
+  OK    http_req_failed rate<0.01
+  OK    t_obtener_cliente p(95)<300
+  FALLA http_req_duration{tipo:crud} p(95)<300
+  FALLA t_listar_clientes p(95)<300
+
+running (1m44.0s), 000/200 VUs, 1363 complete and 11 interrupted iterations
+concurrencia ✓ [ 100% ] 000/200 VUs  1m30s
+time="2026-11-11T21:13:33Z" level=error msg="thresholds on metrics 'http_req_duration{tipo:crud}, t_listar_clientes' have been crossed"

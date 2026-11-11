@@ -78,7 +78,7 @@ folders.push({
     }),
     req("[CP-10] Crear cliente con datos válidos", "POST", "/clientes", {
       headers: [J, AUTH("token_admin")], pre: [`pm.environment.set('sufijo', Date.now());`], body: clienteValido("{{sufijo}}"),
-      tests: [status(201), t("Cliente queda asociado a la empresa del token (RB-2)", `pm.expect(pm.response.json().empresa_id).to.eql(1);`),
+      tests: [status(201), t("Cliente queda asociado a la empresa del token (RB-2)", `pm.expect(Number(pm.response.json().empresa_id)).to.eql(1);`),
         `pm.environment.set('cliente_id', pm.response.json().id);`],
     }),
     req("[CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos", "POST", "/clientes", {
@@ -88,7 +88,7 @@ folders.push({
     }),
     req("[CP-11] Listar clientes de la empresa", "GET", "/clientes", {
       headers: [AUTH("token_admin")],
-      tests: [status(200), t("Devuelve arreglo solo con clientes de la empresa 1", `const a = pm.response.json(); pm.expect(a).to.be.an('array'); a.forEach(c => pm.expect(c.empresa_id).to.eql(1));`)],
+      tests: [status(200), t("Devuelve arreglo solo con clientes de la empresa 1", `const a = pm.response.json(); pm.expect(a).to.be.an('array'); a.forEach(c => pm.expect(Number(c.empresa_id)).to.eql(1));`)],
     }),
     req("[CP-11b] Buscar cliente por nombre", "GET", "/clientes/search?name=Cliente QA", {
       headers: [AUTH("token_admin")],
@@ -189,7 +189,13 @@ folders.push({
         { key: "fecha_inicio", value: "2026-01-01", type: "text" }, { key: "fecha_fin", value: "2026-12-31", type: "text" }],
       tests: [denied("Sin token responde 401/403"), `if (pm.response.code === 201) pm.environment.set('contrato_anon_id', pm.response.json().id);`],
     }),
-    req("[CP-20j] DELETE /contratos/:id sin token", "DELETE", "/contratos/{{contrato_anon_id}}", { tests: [denied("Sin token responde 401/403")] }),
+    req("[CP-20j] Preparación: administrador crea contrato desechable", "POST", "/contratos", {
+      headers: [AUTH("token_admin")],
+      formdata: [{ key: "cliente_id", value: "{{cliente_id}}", type: "text" }, { key: "titulo", value: "Contrato desechable QA", type: "text" },
+        { key: "fecha_inicio", value: "2026-01-01", type: "text" }, { key: "fecha_fin", value: "2026-12-31", type: "text" }],
+      tests: [status(201), `pm.environment.set('contrato_del_id', pm.response.json().id);`],
+    }),
+    req("[CP-20j] DELETE /contratos/:id sin token", "DELETE", "/contratos/{{contrato_del_id}}", { tests: [denied("Sin token responde 401/403")] }),
     req("[CP-20k] GET /clientes sin token (control existente)", "GET", "/clientes", { tests: [denied("Sin token responde 401/403")] }),
     req("[CP-08a] Editor no puede crear clientes vía API", "POST", "/clientes", {
       headers: [J, AUTH("token_editor")], body: clienteValido("editor{{sufijo}}"),

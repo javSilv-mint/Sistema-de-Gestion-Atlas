@@ -297,7 +297,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });",
-                  "pm.test(\"Cliente queda asociado a la empresa del token (RB-2)\", function () { pm.expect(pm.response.json().empresa_id).to.eql(1); });",
+                  "pm.test(\"Cliente queda asociado a la empresa del token (RB-2)\", function () { pm.expect(Number(pm.response.json().empresa_id)).to.eql(1); });",
                   "pm.environment.set('cliente_id', pm.response.json().id);"
                 ]
               }
@@ -389,7 +389,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Devuelve arreglo solo con clientes de la empresa 1\", function () { const a = pm.response.json(); pm.expect(a).to.be.an('array'); a.forEach(c => pm.expect(c.empresa_id).to.eql(1)); });"
+                  "pm.test(\"Devuelve arreglo solo con clientes de la empresa 1\", function () { const a = pm.response.json(); pm.expect(a).to.be.an('array'); a.forEach(c => pm.expect(Number(c.empresa_id)).to.eql(1)); });"
                 ]
               }
             }
@@ -1246,6 +1246,64 @@
           }
         },
         {
+          "name": "[CP-20j] Preparación: administrador crea contrato desechable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.environment.set('contrato_del_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cliente_id",
+                  "value": "{{cliente_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Contrato desechable QA",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_inicio",
+                  "value": "2026-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_fin",
+                  "value": "2026-12-31",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "[CP-20j] DELETE /contratos/:id sin token",
           "event": [
             {
@@ -1262,13 +1320,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/contratos/{{contrato_anon_id}}",
+              "raw": "{{base_url}}/contratos/{{contrato_del_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "contratos",
-                "{{contrato_anon_id}}"
+                "{{contrato_del_id}}"
               ]
             }
           }

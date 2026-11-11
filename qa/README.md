@@ -6,7 +6,7 @@ Kit de pruebas automatizadas y pipeline de seguridad continua para Atlas.
 |---|---|---|
 | `.github/workflows/devsecops-atlas.yml` | GitHub Actions | Orquesta todas las pruebas en cada push / PR / semanalmente |
 | `qa/semgrep/` | Semgrep (SAST) | Reglas propias de Atlas + rulesets OWASP Top 10, JavaScript, JWT y secretos |
-| `qa/postman/` | Postman / Newman | 51 peticiones: funcionales, autenticación, control de acceso, multi-tenant, configuración, tiempos |
+| `qa/postman/` | Postman / Newman | 52 peticiones: funcionales, autenticación, control de acceso, multi-tenant, configuración, tiempos |
 | `qa/e2e/` | Playwright + axe-core | Flujos de interfaz, roles, accesibilidad WCAG 2.1 AA, móvil y 3 navegadores |
 | `qa/k6/` | k6 | Carga con 200 usuarios concurrentes (NFR-PERF-1 y NFR-PERF-3) |
 | (workflow) | OWASP ZAP | DAST: baseline del frontend y escaneo activo de la API (OpenAPI) |

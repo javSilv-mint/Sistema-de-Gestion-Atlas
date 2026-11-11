@@ -30,7 +30,7 @@ jobs:
   # ------------------------------------------------------------------ ETAPA 1
   analisis-estatico:
     name: "1. Análisis estático (SAST, secretos, dependencias)"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -111,7 +111,7 @@ jobs:
   # ------------------------------------------------------------------ ETAPA 2
   pruebas-dinamicas:
     name: "2. Pruebas dinámicas (API, E2E, rendimiento, DAST)"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -169,6 +169,8 @@ jobs:
             echo "### Cliente eliminado por la prueba CP-12 (id=$DEL_ID): filas restantes"; $PSQL -c "SELECT count(*) AS filas FROM clientes WHERE id = $DEL_ID;"
             echo "### Columnas de la tabla clientes (¿existe estado/eliminado?)"; $PSQL -c "SELECT string_agg(column_name, ', ') FROM information_schema.columns WHERE table_name='clientes';"
             echo "### Registros de auditoría insertados sin usuario autenticado"; $PSQL -c "SELECT id, usuario_id, accion FROM auditoria WHERE usuario_id IS NULL ORDER BY id DESC LIMIT 5;"
+            echo "### Contratos creados SIN token (CP-20i): persisten aunque la API respondió 500"; $PSQL -c "SELECT id, cliente_id, titulo FROM contratos WHERE titulo = 'Contrato sin token';"
+            echo "### Contrato desechable eliminado SIN token (CP-20j)"; $PSQL -c "SELECT count(*) AS filas FROM contratos WHERE titulo = 'Contrato desechable QA';"
             echo "### Contraseña del usuario registrado por la prueba"; $PSQL -c "SELECT nombre_usuario, contrasena_hash FROM usuarios WHERE nombre_usuario LIKE 'qa_%' ORDER BY id DESC LIMIT 3;"
           } 2>&1 | tee reportes/bd/evidencia-bd-post-pruebas.txt
 
@@ -176,10 +178,14 @@ jobs:
         continue-on-error: true
         working-directory: qa/e2e
         run: |
-          npm install --no-audit --no-fund >/dev/null
-          npx playwright install --with-deps chromium firefox webkit >/dev/null
-          npx playwright test 2>&1 | tee ../../reportes/e2e/playwright-consola.txt || true
-          cp -r reporte-e2e resultados-e2e.json capturas ../../reportes/e2e/ || true
+          set +e
+          LOG=../../reportes/e2e/playwright-consola.txt
+          npm install --no-audit --no-fund > $LOG 2>&1
+          npx playwright install --with-deps chromium firefox webkit >> $LOG 2>&1 || npx playwright install --with-deps chromium >> $LOG 2>&1
+          npx playwright test >> $LOG 2>&1
+          tail -40 $LOG
+          cp -r reporte-e2e resultados-e2e.json capturas ../../reportes/e2e/ 2>/dev/null
+          exit 0
 
       - name: Rendimiento web - Lighthouse (página de login)
         continue-on-error: true
@@ -238,7 +244,7 @@ jobs:
     name: "3. Consolidación, quality gate y publicación"
     needs: [analisis-estatico, pruebas-dinamicas]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 

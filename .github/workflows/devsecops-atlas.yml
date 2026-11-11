@@ -1,0 +1,256 @@
+# Pipeline DevSecOps de Atlas - ISY1102 EP5
+# Integra controles automatizados de calidad y seguridad en cada cambio de código:
+#   Etapa 1 (estática):  SAST (Semgrep), secretos (Gitleaks), SCA (npm audit + Trivy), configuración (Trivy misconfig)
+#   Etapa 2 (dinámica):  despliegue Docker, pruebas API funcionales y de seguridad (Newman),
+#                        E2E/accesibilidad (Playwright + axe), Lighthouse, carga (k6), DAST (OWASP ZAP)
+#   Etapa 3 (gobierno):  consolidación de evidencias, puerta de calidad (quality gate) y publicación de reportes
+name: DevSecOps Atlas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"   # re-escaneo semanal (lunes) para detectar nuevas CVE en dependencias
+
+permissions:
+  contents: write
+  security-events: write
+
+concurrency:
+  group: devsecops-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  APP_DIR: CodigoFuenteA
+
+jobs:
+  # ------------------------------------------------------------------ ETAPA 1
+  analisis-estatico:
+    name: "1. Análisis estático (SAST, secretos, dependencias)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Preparar carpetas de reportes
+        run: mkdir -p reportes/sast reportes/secretos reportes/sca && chmod -R 777 reportes
+
+      - name: SAST - Semgrep (OWASP Top 10, JavaScript, JWT, secretos)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest \
+            semgrep scan --metrics=off --config p/owasp-top-ten --config p/javascript --config p/jwt --config p/secrets \
+            --json --output reportes/sast/semgrep-owasp.json $APP_DIR || true
+          docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest \
+            semgrep scan --metrics=off --config p/owasp-top-ten --config p/javascript --config p/jwt --config p/secrets \
+            --sarif --output reportes/sast/semgrep-owasp.sarif $APP_DIR || true
+
+      - name: SAST - Semgrep (reglas propias de Atlas)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest \
+            semgrep scan --metrics=off --config qa/semgrep/atlas-reglas.yml \
+            --json --output reportes/sast/semgrep-atlas.json $APP_DIR || true
+          docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest \
+            semgrep scan --metrics=off --config qa/semgrep/atlas-reglas.yml $APP_DIR > reportes/sast/semgrep-atlas.txt 2>&1 || true
+
+      - name: Publicar hallazgos SAST en GitHub Code Scanning
+        if: always() && hashFiles('reportes/sast/semgrep-owasp.sarif') != ''
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: reportes/sast/semgrep-owasp.sarif
+          category: semgrep
+
+      - name: Secretos - Gitleaks (historial completo de git)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:latest detect --source /repo \
+            --report-format json --report-path /repo/reportes/secretos/gitleaks.json --exit-code 0 --redact \
+            2>&1 | tee reportes/secretos/gitleaks.txt
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: SCA - npm audit (backend y frontend)
+        continue-on-error: true
+        run: |
+          (cd $APP_DIR/BACKEND  && npm audit --omit=dev --json > ../../reportes/sca/npm-audit-backend.json  || true)
+          (cd $APP_DIR/FRONTEND && npm audit --omit=dev --json > ../../reportes/sca/npm-audit-frontend.json || true)
+          (cd $APP_DIR/BACKEND  && npm audit --omit=dev > ../../reportes/sca/npm-audit-backend.txt  || true)
+          (cd $APP_DIR/FRONTEND && npm audit --omit=dev > ../../reportes/sca/npm-audit-frontend.txt || true)
+
+      - name: SCA y configuración - Trivy (dependencias, secretos, Dockerfile/compose)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/src" aquasec/trivy:latest fs --quiet --scanners vuln,secret,misconfig \
+            --format json --output /src/reportes/sca/trivy.json /src/$APP_DIR || true
+          docker run --rm -v "$PWD:/src" aquasec/trivy:latest fs --quiet --scanners vuln,secret,misconfig \
+            --severity HIGH,CRITICAL --format table --output /src/reportes/sca/trivy.txt /src/$APP_DIR || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: reportes-estaticos, path: reportes/ }
+
+  # ------------------------------------------------------------------ ETAPA 2
+  pruebas-dinamicas:
+    name: "2. Pruebas dinámicas (API, E2E, rendimiento, DAST)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preparar carpetas de reportes
+        run: mkdir -p reportes/{ambiente,api,e2e,lighthouse,rendimiento,dast,bd} && chmod -R 777 reportes
+
+      - name: Desplegar Atlas con Docker Compose (ambiente QA efímero)
+        run: |
+          # En CI el navegador y la API corren en el mismo runner: se fuerza la URL local de la API
+          sed -i -E 's#^([[:space:]]*)VITE_API_URL:.*#        VITE_API_URL: "http://localhost:4450"#' $APP_DIR/docker-compose.yml
+          grep -n "VITE_API_URL" $APP_DIR/docker-compose.yml
+          docker compose -f $APP_DIR/docker-compose.yml up -d --build 2>&1 | tail -20
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:4450/ >/dev/null && curl -sf http://localhost:3350/ >/dev/null && break
+            sleep 5
+          done
+          docker compose -f $APP_DIR/docker-compose.yml ps | tee reportes/ambiente/docker-ps.txt
+          curl -s http://localhost:4450/ | tee reportes/ambiente/api-health.json
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Evidencia BD - almacenamiento de credenciales y datos sensibles (CP-06, CP-22)
+        run: |
+          PSQL="docker exec atlas-postgres psql -U postgres -d atlas -P pager=off"
+          {
+            echo "### Credenciales almacenadas (CP-06)"; $PSQL -c "SELECT id, nombre_usuario, contrasena_hash, length(contrasena_hash) AS largo FROM usuarios ORDER BY id LIMIT 5;"
+            echo "### Datos bancarios en reposo (CP-22)"; $PSQL -c "SELECT id, nombre, numero_cuenta, nombre_banco FROM clientes ORDER BY id LIMIT 3;"
+            echo "### Extensiones de cifrado instaladas"; $PSQL -c "SELECT extname FROM pg_extension;"
+            echo "### Conexión SSL a la BD (CP-21)"; $PSQL -c "SHOW ssl;"
+          } 2>&1 | tee reportes/bd/evidencia-bd-inicial.txt
+
+      - name: Pruebas API funcionales y de seguridad - Newman (Postman)
+        continue-on-error: true
+        run: |
+          npm install -g newman@6 newman-reporter-htmlextra@1 >/dev/null 2>&1
+          newman run qa/postman/atlas-ep5.postman_collection.json \
+            -e qa/postman/atlas-ci.postman_environment.json --working-dir qa/data \
+            --timeout-request 30000 --color off --disable-unicode \
+            -r cli,htmlextra,json,junit \
+            --reporter-htmlextra-export reportes/api/newman-reporte.html \
+            --reporter-htmlextra-title "Atlas EP5 - Pruebas API automatizadas" \
+            --reporter-json-export reportes/api/newman-resultados.json \
+            --reporter-junit-export reportes/api/newman-junit.xml \
+            --export-environment reportes/api/newman-env-final.json \
+            2>&1 | tee reportes/api/newman-consola.txt
+
+      - name: Evidencia BD - eliminación física y registros sin autenticación (CP-12, CP-19)
+        if: always()
+        run: |
+          PSQL="docker exec atlas-postgres psql -U postgres -d atlas -P pager=off"
+          DEL_ID=$(node -e "try{const e=require('./reportes/api/newman-env-final.json');console.log((e.values.find(v=>v.key==='cliente_del_id')||{}).value||0)}catch{console.log(0)}")
+          {
+            echo "### Cliente eliminado por la prueba CP-12 (id=$DEL_ID): filas restantes"; $PSQL -c "SELECT count(*) AS filas FROM clientes WHERE id = $DEL_ID;"
+            echo "### Columnas de la tabla clientes (¿existe estado/eliminado?)"; $PSQL -c "SELECT string_agg(column_name, ', ') FROM information_schema.columns WHERE table_name='clientes';"
+            echo "### Registros de auditoría insertados sin usuario autenticado"; $PSQL -c "SELECT id, usuario_id, accion FROM auditoria WHERE usuario_id IS NULL ORDER BY id DESC LIMIT 5;"
+            echo "### Contraseña del usuario registrado por la prueba"; $PSQL -c "SELECT nombre_usuario, contrasena_hash FROM usuarios WHERE nombre_usuario LIKE 'qa_%' ORDER BY id DESC LIMIT 3;"
+          } 2>&1 | tee reportes/bd/evidencia-bd-post-pruebas.txt
+
+      - name: Pruebas E2E, roles y accesibilidad - Playwright + axe-core
+        continue-on-error: true
+        working-directory: qa/e2e
+        run: |
+          npm install --no-audit --no-fund >/dev/null
+          npx playwright install --with-deps chromium firefox webkit >/dev/null
+          npx playwright test 2>&1 | tee ../../reportes/e2e/playwright-consola.txt || true
+          cp -r reporte-e2e resultados-e2e.json capturas ../../reportes/e2e/ || true
+
+      - name: Rendimiento web - Lighthouse (página de login)
+        continue-on-error: true
+        run: |
+          npx --yes lighthouse@12 http://localhost:3350/login --quiet \
+            --chrome-flags="--headless=new --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output=html --output-path=reportes/lighthouse/login || true
+
+      - name: Carga y concurrencia - k6 (200 usuarios virtuales)
+        continue-on-error: true
+        run: |
+          docker run --rm --network host -v "$PWD/qa/k6:/scripts" -v "$PWD/reportes/rendimiento:/out" -w /out \
+            -e BASE_URL=http://localhost:4450 -e VUS_MAX=200 grafana/k6:latest run /scripts/carga_atlas.js \
+            2>&1 | tee reportes/rendimiento/k6-consola.txt || true
+
+      - name: DAST - OWASP ZAP baseline (frontend)
+        continue-on-error: true
+        run: |
+          docker run --rm --network host -v "$PWD/reportes/dast:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py -t http://localhost:3350 -I -r zap-frontend.html -J zap-frontend.json -w zap-frontend.md \
+            2>&1 | tail -60 > reportes/dast/zap-frontend-consola.txt || true
+
+      - name: DAST - OWASP ZAP API scan (OpenAPI del backend, escaneo activo)
+        continue-on-error: true
+        run: |
+          docker run --rm --network host -v "$PWD/reportes/dast:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
+            zap-api-scan.py -t http://localhost:4450/openapi.json -f openapi -I \
+            -r zap-api.html -J zap-api.json -w zap-api.md \
+            -z "-config scanner.maxScanDurationInMins=12 -config scanner.maxRuleDurationInMins=2" \
+            2>&1 | tail -80 > reportes/dast/zap-api-consola.txt || true
+
+      - name: Registros del backend
+        if: always()
+        run: docker logs atlas-backend > reportes/ambiente/backend.log 2>&1 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: reportes-dinamicos, path: reportes/ }
+
+  # ------------------------------------------------------------------ ETAPA 3
+  consolidacion:
+    name: "3. Consolidación, quality gate y publicación"
+    needs: [analisis-estatico, pruebas-dinamicas]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with: { path: descargas }
+
+      - name: Unificar reportes
+        run: |
+          mkdir -p reportes
+          cp -r descargas/reportes-estaticos/* reportes/ 2>/dev/null || true
+          cp -r descargas/reportes-dinamicos/* reportes/ 2>/dev/null || true
+          find reportes -maxdepth 2 | sort
+
+      - name: Generar resumen ejecutivo y evaluar quality gate
+        id: gate
+        run: |
+          python3 qa/scripts/resumen.py reportes | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar reportes en la rama qa-reportes
+        if: always()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "$RUN_URL" > reportes/RUN_URL.txt
+          echo "${{ github.sha }}" > reportes/COMMIT.txt
+          cd reportes
+          git init -q -b qa-reportes
+          git config user.name "atlas-devsecops-bot"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -qm "Reportes DevSecOps run ${{ github.run_number }} ($RUN_URL)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" qa-reportes
+
+      - name: Quality gate (bloquea la liberación si hay hallazgos críticos)
+        if: always()
+        run: |
+          if [ -f reportes/GATE_FALLIDO ]; then
+            echo "::error::Quality gate NO superado: ver RESUMEN.md (hallazgos críticos/altos abiertos)"
+            cat reportes/GATE_FALLIDO
+            exit 1
+          fi
+          echo "Quality gate superado"

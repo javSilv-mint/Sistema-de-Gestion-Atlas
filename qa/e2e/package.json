@@ -1,0 +1,9 @@
+{
+  "name": "atlas-e2e",
+  "private": true,
+  "scripts": { "test": "playwright test" },
+  "devDependencies": {
+    "@playwright/test": "1.49.1",
+    "@axe-core/playwright": "4.10.1"
+  }
+}

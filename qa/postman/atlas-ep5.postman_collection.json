@@ -1,0 +1,2003 @@
+{
+  "info": {
+    "name": "Atlas EP5 - Pruebas automatizadas funcionales y de seguridad",
+    "description": "ISY1102 - Evaluación Parcial 5. Cada prueba verifica el comportamiento esperado según el ERS v1.1, OWASP Top 10:2021 y la Ley 19.628.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 Preparación de datos",
+      "item": [
+        {
+          "name": "PREP Login administrador (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.environment.set('token_admin', pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{admin_user}}\",\n  \"password\": \"{{admin_pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PREP Login editor (editor)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.environment.set('token_editor', pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{editor_user}}\",\n  \"password\": \"{{editor_pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PREP Registrar empresa B (segundo tenant)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const s = Date.now(); pm.environment.set('b_user', 'qa_empresa_b_' + s); pm.environment.set('b_pass', 'Qa#Atlas2026!'); pm.environment.set('b_sufijo', s);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empresas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": {\n    \"nombre_usuario\": \"{{b_user}}\",\n    \"contrasena_hash\": \"{{b_pass}}\",\n    \"correo\": \"{{b_user}}@qa.test\"\n  },\n  \"empresa\": {\n    \"nombre\": \"Empresa QA B {{b_sufijo}}\",\n    \"correo\": \"empresa_b_{{b_sufijo}}@qa.test\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PREP Login usuario empresa B",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.environment.set('token_b', pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{b_user}}\",\n  \"password\": \"{{b_pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 Pruebas funcionales (API)",
+      "item": [
+        {
+          "name": "[CP-01] Inicio de sesión exitoso entrega JWT válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"La respuesta contiene un JWT con 3 segmentos\", function () { const tk = pm.response.json().token; pm.expect(tk).to.be.a('string'); pm.expect(tk.split('.').length).to.eql(3); });",
+                  "pm.test(\"El JWT incluye empresaId y expira en ≤ 2 h\", function () { const p = JSON.parse(atob(pm.response.json().token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))); pm.expect(p.empresaId).to.exist; pm.expect(p.exp - p.iat).to.be.at.most(7200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{admin_user}}\",\n  \"password\": \"{{admin_pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-02] Credenciales inválidas son rechazadas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 401\", function () { pm.response.to.have.status(401); });",
+                  "pm.test(\"No entrega token\", function () { pm.expect(pm.response.json().token).to.be.undefined; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{admin_user}}\",\n  \"password\": \"clave-incorrecta\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-10] Crear cliente con datos válidos",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set('sufijo', Date.now());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"Cliente queda asociado a la empresa del token (RB-2)\", function () { pm.expect(pm.response.json().empresa_id).to.eql(1); });",
+                  "pm.environment.set('cliente_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente QA {{sufijo}}\",\n  \"correo\": \"cliente.{{sufijo}}@qa.test\",\n  \"telefono\": \"912345678\",\n  \"direccion\": \"Av. Prueba 123, Santiago\",\n  \"es_empresa\": true,\n  \"rut\": \"76.123.456-0\",\n  \"nombre_fantasia\": \"QA SpA\",\n  \"nombre_banco\": \"Banco QA\",\n  \"numero_cuenta\": \"000123456\",\n  \"titular_cuenta\": \"QA SpA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-10b] Rechazar cliente con correo, RUT y teléfono inválidos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 400 con detalle de validación (RF-4.3)\", function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"\",\n  \"correo\": \"no-es-correo\",\n  \"telefono\": \"abc\",\n  \"rut\": \"11.111.111-K\",\n  \"es_empresa\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-11] Listar clientes de la empresa",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Devuelve arreglo solo con clientes de la empresa 1\", function () { const a = pm.response.json(); pm.expect(a).to.be.an('array'); a.forEach(c => pm.expect(c.empresa_id).to.eql(1)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-11b] Buscar cliente por nombre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Encuentra el cliente creado\", function () { pm.expect(pm.response.json().length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/search?name=Cliente QA",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Cliente QA"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-14] Crear contrato con documento PDF asociado a un cliente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.environment.set('contrato_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cliente_id",
+                  "value": "{{cliente_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Contrato QA EP5",
+                  "type": "text"
+                },
+                {
+                  "key": "descripcion",
+                  "value": "Contrato generado por prueba automatizada",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_inicio",
+                  "value": "2026-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_fin",
+                  "value": "2026-12-31",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "contrato_prueba.pdf"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-14b] Rechazar contrato con fecha de término anterior a la de inicio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 400 por rango de fechas inválido\", function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cliente_id",
+                  "value": "{{cliente_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Contrato fechas inválidas",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_inicio",
+                  "value": "2026-12-31",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_fin",
+                  "value": "2026-01-01",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-16] Descargar documento del contrato (usuario autorizado)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Content-Type application/pdf\", function () { pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos/{{contrato_id}}/file",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "{{contrato_id}}",
+                "file"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-17] Listar contratos con estado calculado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Cada contrato informa su estado (activo / por vencer / expirado)\", function () { const a = pm.response.json(); pm.expect(a.length).to.be.above(0); a.forEach(c => pm.expect(c.estado, 'contrato ' + c.id + ' sin campo estado').to.exist); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-12] Crear cliente desechable para prueba de eliminación",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.environment.set('cliente_del_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente QA del{{sufijo}}\",\n  \"correo\": \"cliente.del{{sufijo}}@qa.test\",\n  \"telefono\": \"912345678\",\n  \"direccion\": \"Av. Prueba 123, Santiago\",\n  \"es_empresa\": true,\n  \"rut\": \"76.123.456-0\",\n  \"nombre_fantasia\": \"QA SpA\",\n  \"nombre_banco\": \"Banco QA\",\n  \"numero_cuenta\": \"000123456\",\n  \"titular_cuenta\": \"QA SpA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-12] Eliminar cliente (debe ser eliminación lógica)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200/204\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 204]); });",
+                  "pm.test(\"La respuesta indica eliminación lógica (estado/eliminado) y no borrado físico\", function () { const b = pm.response.text(); pm.expect(b).to.match(/eliminado|inactivo|deleted_at|estado/i); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/{{cliente_del_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "{{cliente_del_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Seguridad - Autenticación y sesión (OWASP A07/A02)",
+      "item": [
+        {
+          "name": "[SEC-AUT-01] Inyección SQL en login es rechazada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401 (consultas parametrizadas)\", function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"admin' OR '1'='1' --\",\n  \"password\": \"x' OR '1'='1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[SEC-AUT-02] JWT con algoritmo 'none' es rechazado",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Construye un JWT firmado con el secreto POR DEFECTO publicado en docker-compose.yml",
+                  "function b64url(wa){return CryptoJS.enc.Base64.stringify(wa).replace(/=+$/,'').replace(/\\+/g,'-').replace(/\\//g,'_');}",
+                  "const h = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({alg:'HS256',typ:'JWT'})));",
+                  "const p = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({usuarioId:1,nombreUsuario:'atacante',empresaUsuarioId:1,empresaId:1,iat:Math.floor(Date.now()/1000)})));",
+                  "const s = b64url(CryptoJS.HmacSHA256(h + '.' + p, pm.environment.get('jwt_secret_publico')));",
+                  "pm.environment.set('token_forjado', h + '.' + p + '.' + s);",
+                  "const none = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({alg:'none',typ:'JWT'})));",
+                  "pm.environment.set('token_none', none + '.' + p + '.');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401 ante token sin firma\", function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_none}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[SEC-AUT-03] JWT forjado con secreto por defecto es rechazado",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Construye un JWT firmado con el secreto POR DEFECTO publicado en docker-compose.yml",
+                  "function b64url(wa){return CryptoJS.enc.Base64.stringify(wa).replace(/=+$/,'').replace(/\\+/g,'-').replace(/\\//g,'_');}",
+                  "const h = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({alg:'HS256',typ:'JWT'})));",
+                  "const p = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({usuarioId:1,nombreUsuario:'atacante',empresaUsuarioId:1,empresaId:1,iat:Math.floor(Date.now()/1000)})));",
+                  "const s = b64url(CryptoJS.HmacSHA256(h + '.' + p, pm.environment.get('jwt_secret_publico')));",
+                  "pm.environment.set('token_forjado', h + '.' + p + '.' + s);",
+                  "const none = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify({alg:'none',typ:'JWT'})));",
+                  "pm.environment.set('token_none', none + '.' + p + '.');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401 (el secreto JWT no debe ser el valor por defecto público)\", function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_forjado}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-05] Registro con contraseña débil es rechazado",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set('weak', 'qa_debil_' + Date.now());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400 por no cumplir política de contraseñas (NFR-SEG-2)\", function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empresas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": {\n    \"nombre_usuario\": \"{{weak}}\",\n    \"contrasena_hash\": \"123\",\n    \"correo\": \"{{weak}}@qa.test\"\n  },\n  \"empresa\": {\n    \"nombre\": \"Empresa débil {{weak}}\",\n    \"correo\": \"{{weak}}@empresa.test\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-03] Existe endpoint de cierre de sesión con revocación del token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200/204 (logout implementado en servidor)\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 204]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Seguridad - Control de acceso y aislamiento (OWASP A01)",
+      "item": [
+        {
+          "name": "[CP-20a] GET /contratos/:id sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/contratos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20b] GET /contratos/:id/file sin token (descarga de documento)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/contratos/{{contrato_id}}/file",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "{{contrato_id}}",
+                "file"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20c] GET /usuarios/:id sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/usuarios/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20d] GET /empresas sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/empresas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20e] GET /roles sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20f] GET /auditoria sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auditoria",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auditoria"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20g] GET /empresa-usuarios/:id sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/empresa-usuarios/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresa-usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20h] POST /auditoria sin token (inyección de registros falsos)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auditoria",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auditoria"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accion\": \"QA_FALSO\",\n  \"detalles\": \"registro insertado sin autenticación\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-20i] POST /contratos sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });",
+                  "if (pm.response.code === 201) pm.environment.set('contrato_anon_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cliente_id",
+                  "value": "{{cliente_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Contrato sin token",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_inicio",
+                  "value": "2026-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_fin",
+                  "value": "2026-12-31",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20j] DELETE /contratos/:id sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/contratos/{{contrato_anon_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "{{contrato_anon_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-20k] GET /clientes sin token (control existente)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401/403\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-08a] Editor no puede crear clientes vía API",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403 (RF-3.2 / RB-4: rol editor sin permiso de escritura)\", function () { pm.response.to.have.status(403); });",
+                  "if (pm.response.code === 201) pm.environment.set('cliente_editor_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_editor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente QA editor{{sufijo}}\",\n  \"correo\": \"cliente.editor{{sufijo}}@qa.test\",\n  \"telefono\": \"912345678\",\n  \"direccion\": \"Av. Prueba 123, Santiago\",\n  \"es_empresa\": true,\n  \"rut\": \"76.123.456-0\",\n  \"nombre_fantasia\": \"QA SpA\",\n  \"nombre_banco\": \"Banco QA\",\n  \"numero_cuenta\": \"000123456\",\n  \"titular_cuenta\": \"QA SpA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-08b] Editor no puede eliminar clientes vía API",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403 (rol editor)\", function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_editor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/{{cliente_editor_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "{{cliente_editor_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-07] Editor no puede crear usuarios con rol administrador",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set('esc', 'qa_escalada_' + Date.now());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403 (escalamiento de privilegios)\", function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_editor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empresa-usuarios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresa-usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{esc}}\",\n  \"contrasena_hash\": \"Escalada#2026\",\n  \"correo\": \"{{esc}}@qa.test\",\n  \"rol_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-13a] Empresa B no ve clientes de empresa A (control existente)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403/404 a recurso de otra empresa\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_b}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-13b] Empresa B no puede leer contratos de empresa A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403/404 a recurso de otra empresa (RB-2)\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_b}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-13c] Empresa B no puede descargar documentos de empresa A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403/404 a documento de otra empresa (RB-2)\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_b}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos/{{contrato_id}}/file",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos",
+                "{{contrato_id}}",
+                "file"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-13d] Empresa B no puede leer datos de empresa A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 403/404 a datos de otra empresa\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_b}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empresas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "empresas",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-19] Auditoría de empresa B no expone eventos de empresa A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No contiene acciones de los usuarios admin/editor de la empresa A\", function () { if (pm.response.code !== 200) { pm.expect(pm.response.code).to.be.oneOf([401,403]); return; } const a = pm.response.json(); const ajenos = a.filter(e => ['admin','editor'].includes(e.usuario_id)); pm.expect(ajenos.length, ajenos.length + ' eventos de otra empresa expuestos').to.eql(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_b}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auditoria",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auditoria"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 Seguridad - Configuración, errores y archivos (OWASP A04/A05)",
+      "item": [
+        {
+          "name": "[CP-23a] Cabeceras de seguridad HTTP presentes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"X-Content-Type-Options: nosniff\", function () { pm.expect(pm.response.headers.get('X-Content-Type-Options')).to.eql('nosniff'); });",
+                  "pm.test(\"Content-Security-Policy definida\", function () { pm.expect(pm.response.headers.has('Content-Security-Policy')).to.be.true; });",
+                  "pm.test(\"Strict-Transport-Security definida (HSTS)\", function () { pm.expect(pm.response.headers.has('Strict-Transport-Security')).to.be.true; });",
+                  "pm.test(\"No revela tecnología (sin X-Powered-By)\", function () { pm.expect(pm.response.headers.has('X-Powered-By')).to.be.false; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-23b] CORS no acepta orígenes arbitrarios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Access-Control-Allow-Origin no es * ni el origen atacante\", function () { const o = pm.response.headers.get('Access-Control-Allow-Origin'); pm.expect(o === '*' || o === 'https://sitio-atacante.example', 'ACAO = ' + o).to.be.false; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "https://sitio-atacante.example"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-24] Errores no exponen detalles internos (SQL/stack)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Respuesta sin mensajes del motor de base de datos\", function () { pm.expect(pm.response.text()).to.not.match(/invalid input syntax|syntax error|postgres|pg_|at .*\\.js/i); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/abc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "abc"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-15] Carga de archivo no permitido (.exe) es rechazada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400/415 (RF-5.2: solo PDF, DOC, PPT, JPG, PNG)\", function () { pm.expect(pm.response.code).to.be.oneOf([400, 415]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cliente_id",
+                  "value": "{{cliente_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Contrato con ejecutable",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_inicio",
+                  "value": "2026-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "fecha_fin",
+                  "value": "2026-12-31",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "malicioso.exe"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-24b] Documentación Swagger no expuesta públicamente en producción",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"/docs responde 401/403/404 con NODE_ENV=production\", function () { pm.expect(pm.response.code, 'Se esperaba 401/403/404 y se obtuvo ' + pm.response.code).to.be.oneOf([401, 403, 404]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/docs/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "docs",
+                ""
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 Rendimiento por petición (NFR-PERF-1 < 300 ms)",
+      "item": [
+        {
+          "name": "[CP-27a] GET / (salud de la API)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-27b] POST /autenticacion/login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/autenticacion/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autenticacion",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_usuario\": \"{{admin_user}}\",\n  \"password\": \"{{admin_pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "[CP-27c] GET /clientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-27d] GET /contratos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contratos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contratos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-27e] GET /metricas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/metricas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "metricas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "[CP-27f] GET /clientes/:id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Tiempo de respuesta < 300 ms (NFR-PERF-1)\", function () { pm.expect(pm.response.responseTime).to.be.below(300); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/{{cliente_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "{{cliente_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

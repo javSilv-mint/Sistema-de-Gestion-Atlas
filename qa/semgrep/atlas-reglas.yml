@@ -1,0 +1,54 @@
+# Reglas SAST propias para Atlas (complementan los rulesets OWASP de Semgrep)
+rules:
+  - id: atlas-password-texto-plano
+    message: "Comparación de contraseña en texto plano. Usar bcrypt.compare() (OWASP A02/A07, NFR-SEG-2, Ley 19.628 art. 11)."
+    severity: ERROR
+    languages: [javascript]
+    metadata: { owasp: "A02:2021", cwe: "CWE-256: Plaintext Storage of a Password" }
+    pattern-either:
+      - pattern: $U.contrasena_hash !== $P
+      - pattern: $U.contrasena_hash === $P
+      - pattern: $U.contrasena_hash != $P
+  - id: atlas-jwt-secreto-por-defecto
+    message: "Secreto JWT con valor por defecto en el código. Debe provenir de un gestor de secretos y fallar si no existe (OWASP A02/A05)."
+    severity: ERROR
+    languages: [javascript]
+    metadata: { owasp: "A05:2021", cwe: "CWE-798: Use of Hard-coded Credentials" }
+    pattern: process.env.JWT_SECRET || "$S"
+  - id: atlas-credencial-bd-por-defecto
+    message: "Cadena de conexión con credenciales embebidas (OWASP A05, CWE-798)."
+    severity: ERROR
+    languages: [javascript]
+    metadata: { owasp: "A05:2021", cwe: "CWE-798" }
+    pattern-regex: postgres://[^:\s]+:[^@\s]+@
+  - id: atlas-fuga-de-error
+    message: "Se devuelve err.message al cliente: expone detalles internos (OWASP A05, CWE-209, NFR-SEG-7)."
+    severity: WARNING
+    languages: [javascript]
+    metadata: { owasp: "A05:2021", cwe: "CWE-209" }
+    pattern: |
+      $RES.status(500).json({..., glosa: $E.message || $X, ...})
+  - id: atlas-cors-abierto
+    message: "cors() sin lista blanca de orígenes (OWASP A05)."
+    severity: WARNING
+    languages: [javascript]
+    metadata: { owasp: "A05:2021", cwe: "CWE-942" }
+    pattern: $APP.use(cors())
+  - id: atlas-upload-sin-limites
+    message: "multer sin fileFilter ni limits: permite cualquier tipo y tamaño de archivo (OWASP A04, RF-5.2, CWE-434)."
+    severity: WARNING
+    languages: [javascript]
+    metadata: { owasp: "A04:2021", cwe: "CWE-434" }
+    pattern: "multer({ storage: $S })"
+  - id: atlas-latencia-artificial
+    message: "Retardo artificial en la ruta: incumple NFR-PERF-1 (< 300 ms) y facilita DoS."
+    severity: WARNING
+    languages: [javascript]
+    metadata: { owasp: "A04:2021", cwe: "CWE-400" }
+    pattern: await delay($MS)
+  - id: atlas-borrado-fisico
+    message: "DELETE físico sobre tabla de negocio: el ERS exige eliminación lógica y trazabilidad (RF-4, Ley 19.628)."
+    severity: WARNING
+    languages: [javascript]
+    metadata: { owasp: "A04:2021", cwe: "CWE-212" }
+    pattern-regex: DELETE FROM (clientes|contratos|usuarios|empresas)

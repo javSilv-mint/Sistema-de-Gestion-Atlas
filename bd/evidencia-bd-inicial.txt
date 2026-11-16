@@ -1,0 +1,26 @@
+### Credenciales almacenadas (CP-06)
+ id | nombre_usuario | contrasena_hash | largo 
+----+----------------+-----------------+-------
+  1 | admin          | admin           |     5
+  2 | editor         | editor          |     6
+(2 rows)
+
+### Datos bancarios en reposo (CP-22)
+ id |     nombre     | numero_cuenta |  nombre_banco   
+----+----------------+---------------+-----------------
+  1 | María González | 9876543210    | Banco Santander
+  2 | Pedro Morales  | 4567891230    | Banco BCI
+(2 rows)
+
+### Extensiones de cifrado instaladas
+ extname 
+---------
+ plpgsql
+(1 row)
+
+### Conexión SSL a la BD (CP-21)
+ ssl 
+-----
+ off
+(1 row)
+

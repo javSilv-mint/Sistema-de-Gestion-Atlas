@@ -1,0 +1,14 @@
+[
+  {
+    "id": "button-name",
+    "impacto": "critical",
+    "descripcion": "Buttons must have discernible text",
+    "nodos": 8
+  },
+  {
+    "id": "list",
+    "impacto": "serious",
+    "descripcion": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+    "nodos": 1
+  }
+]

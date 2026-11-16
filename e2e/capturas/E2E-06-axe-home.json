@@ -1,0 +1,14 @@
+[
+  {
+    "id": "aria-progressbar-name",
+    "impacto": "serious",
+    "descripcion": "ARIA progressbar nodes must have an accessible name",
+    "nodos": 1
+  },
+  {
+    "id": "list",
+    "impacto": "serious",
+    "descripcion": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+    "nodos": 1
+  }
+]

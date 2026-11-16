@@ -1,0 +1,8 @@
+[
+  {
+    "id": "color-contrast",
+    "impacto": "serious",
+    "descripcion": "Elements must meet minimum color contrast ratio thresholds",
+    "nodos": 1
+  }
+]

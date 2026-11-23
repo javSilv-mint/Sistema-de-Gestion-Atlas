@@ -1,0 +1,124 @@
+{
+  "id": "3a2a340b-6cb8-4fbe-9fda-443b21c0180a",
+  "name": "Atlas CI",
+  "values": [
+    {
+      "type": "any",
+      "value": "http://localhost:4450",
+      "key": "base_url"
+    },
+    {
+      "type": "any",
+      "value": "admin",
+      "key": "admin_user"
+    },
+    {
+      "type": "any",
+      "value": "admin",
+      "key": "admin_pass"
+    },
+    {
+      "type": "any",
+      "value": "editor",
+      "key": "editor_user"
+    },
+    {
+      "type": "any",
+      "value": "editor",
+      "key": "editor_pass"
+    },
+    {
+      "type": "any",
+      "value": "your-secret-key-change-in-production",
+      "key": "jwt_secret_publico"
+    },
+    {
+      "type": "any",
+      "value": "999999",
+      "key": "contrato_anon_id"
+    },
+    {
+      "type": "any",
+      "value": "6",
+      "key": "cliente_editor_id"
+    },
+    {
+      "type": "any",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOiIxIiwibm9tYnJlVXN1YXJpbyI6ImFkbWluIiwiZW1wcmVzYVVzdWFyaW9JZCI6IjEiLCJlbXByZXNhSWQiOiIxIiwiaWF0IjoxNzk1NDU2Nzg0LCJleHAiOjE3OTU0NjM5ODR9.umn2pyoElbJ3Y2wIZWHtL3QcNdbrY9UOBHqcejROdDE",
+      "key": "token_admin"
+    },
+    {
+      "type": "any",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOiIyIiwibm9tYnJlVXN1YXJpbyI6ImVkaXRvciIsImVtcHJlc2FVc3VhcmlvSWQiOiIyIiwiZW1wcmVzYUlkIjoiMSIsImlhdCI6MTc5NTQ1Njc4OCwiZXhwIjoxNzk1NDYzOTg4fQ.oyt9W_unG4yxZuNkvInxhaItFdSPS7CjITZ8BcEM4_Y",
+      "key": "token_editor"
+    },
+    {
+      "type": "any",
+      "value": "qa_empresa_b_1795456788975",
+      "key": "b_user"
+    },
+    {
+      "type": "any",
+      "value": "Qa#Atlas2026!",
+      "key": "b_pass"
+    },
+    {
+      "type": "any",
+      "value": 1795456788975,
+      "key": "b_sufijo"
+    },
+    {
+      "type": "any",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOiIzIiwibm9tYnJlVXN1YXJpbyI6InFhX2VtcHJlc2FfYl8xNzk1NDU2Nzg4OTc1IiwiZW1wcmVzYVVzdWFyaW9JZCI6IjMiLCJlbXByZXNhSWQiOiIyIiwiaWF0IjoxNzk1NDU2NzkzLCJleHAiOjE3OTU0NjM5OTN9.KYvlHByW8qGfGfbEdq_V0lUCDAXeP0q6b11lvq_-974",
+      "key": "token_b"
+    },
+    {
+      "type": "any",
+      "value": 1795456801070,
+      "key": "sufijo"
+    },
+    {
+      "type": "any",
+      "value": "3",
+      "key": "cliente_id"
+    },
+    {
+      "type": "any",
+      "value": "3",
+      "key": "contrato_id"
+    },
+    {
+      "type": "any",
+      "value": "5",
+      "key": "cliente_del_id"
+    },
+    {
+      "type": "any",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWJyZVVzdWFyaW8iOiJhdGFjYW50ZSIsImVtcHJlc2FVc3VhcmlvSWQiOjEsImVtcHJlc2FJZCI6MSwiaWF0IjoxNzk1NDU2ODE3fQ.qyoOeuNUaDEoqjduPREzBmJT3GkMhk_GZ-nX02LyGnk",
+      "key": "token_forjado"
+    },
+    {
+      "type": "any",
+      "value": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c3VhcmlvSWQiOjEsIm5vbWJyZVVzdWFyaW8iOiJhdGFjYW50ZSIsImVtcHJlc2FVc3VhcmlvSWQiOjEsImVtcHJlc2FJZCI6MSwiaWF0IjoxNzk1NDU2ODE3fQ.",
+      "key": "token_none"
+    },
+    {
+      "type": "any",
+      "value": "qa_debil_1795456821336",
+      "key": "weak"
+    },
+    {
+      "type": "any",
+      "value": "6",
+      "key": "contrato_del_id"
+    },
+    {
+      "type": "any",
+      "value": "qa_escalada_1795456825587",
+      "key": "esc"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-11-23T18:00:41.998Z",
+  "_postman_exported_using": "Newman/6.2.3"
+}

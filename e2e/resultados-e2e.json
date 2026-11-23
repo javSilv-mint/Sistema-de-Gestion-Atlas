@@ -1,0 +1,824 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/playwright.config.js",
+    "rootDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reporte-e2e",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "resultados-e2e.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium-escritorio",
+        "name": "chromium-escritorio",
+        "testDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox-escritorio",
+        "name": "firefox-escritorio",
+        "testDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit-movil",
+        "name": "webkit-movil",
+        "testDir": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.49.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "atlas.spec.js",
+      "file": "atlas.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[E2E-01] Login de administrador y navegación a Clientes @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "tiempo_login_ms",
+                  "description": "4489"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "passed",
+                  "duration": 9903,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:01:33.227Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-01-Login-de-adm-fceee-avegación-a-Clientes-compat-chromium-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-8db294cf268c89c84062",
+          "file": "atlas.spec.js",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "[E2E-02] Credenciales inválidas muestran error y no ingresan",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "passed",
+                  "duration": 6731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:01:43.197Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-02-Credenciales-35552-uestran-error-y-no-ingresan-chromium-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-a2c05574032e12bb14d7",
+          "file": "atlas.spec.js",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "[E2E-03] Credenciales por defecto no deben mostrarse en la pantalla de login",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "passed",
+                  "duration": 609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:01:49.935Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-03-Credenciales-e2bc6-rse-en-la-pantalla-de-login-chromium-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-26f68bf5e939684e71b5",
+          "file": "atlas.spec.js",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "[E2E-04] Usuario editor no puede acceder al formulario de nuevo cliente",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "failed",
+                  "duration": 21913,
+                  "error": {
+                    "message": "Error: \u001b[31mTimed out 15000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText('No autorizado')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - expect.toBeVisible with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('No autorizado')\u001b[22m\n",
+                    "stack": "Error: \u001b[31mTimed out 15000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText('No autorizado')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - expect.toBeVisible with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('No autorizado')\u001b[22m\n\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:47:49",
+                    "matcherResult": {
+                      "message": "\u001b[31mTimed out 15000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText('No autorizado')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - expect.toBeVisible with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('No autorizado')\u001b[22m\n",
+                      "pass": false,
+                      "actual": "hidden",
+                      "name": "toBeVisible",
+                      "expected": "visible",
+                      "log": [
+                        "  - expect.toBeVisible with timeout 15000ms",
+                        "  - waiting for getByText('No autorizado')"
+                      ],
+                      "timeout": 15000
+                    },
+                    "location": {
+                      "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                      "column": 49,
+                      "line": 47
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 45 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m2000\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mscreenshot({ path\u001b[33m:\u001b[39m \u001b[32m\"capturas/E2E-04-editor-nuevo-cliente.png\"\u001b[39m\u001b[33m,\u001b[39m fullPage\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m\"No autorizado\"\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m test(\u001b[32m\"[E2E-05] Token y rol no se almacenan en localStorage manipulable\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                        "column": 49,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[31mTimed out 15000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText('No autorizado')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - expect.toBeVisible with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('No autorizado')\u001b[22m\n\n\n\u001b[0m \u001b[90m 45 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m2000\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mscreenshot({ path\u001b[33m:\u001b[39m \u001b[32m\"capturas/E2E-04-editor-nuevo-cliente.png\"\u001b[39m\u001b[33m,\u001b[39m fullPage\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m\"No autorizado\"\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m test(\u001b[32m\"[E2E-05] Token y rol no se almacenan en localStorage manipulable\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:47:49"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:01:50.552Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-04-Usuario-edit-d6dda-formulario-de-nuevo-cliente-chromium-escritorio/test-failed-1.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-04-Usuario-edit-d6dda-formulario-de-nuevo-cliente-chromium-escritorio/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                    "column": 49,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-a70903d79f4d9eda1cb5",
+          "file": "atlas.spec.js",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "[E2E-05] Token y rol no se almacenan en localStorage manipulable",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "status": "failed",
+                  "duration": 5019,
+                  "error": {
+                    "message": "Error: El rol del editor quedó guardado como: administrador\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"administrador\"\u001b[39m",
+                    "stack": "Error: El rol del editor quedó guardado como: administrador\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"administrador\"\u001b[39m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:54:76",
+                    "matcherResult": {
+                      "actual": "administrador",
+                      "expected": "administrador",
+                      "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"administrador\"\u001b[39m",
+                      "name": "toBe",
+                      "pass": true
+                    },
+                    "location": {
+                      "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                      "column": 76,
+                      "line": 54
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 52 |\u001b[39m   \u001b[36mconst\u001b[39m ls \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m ({ token\u001b[33m:\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[32m\"token\"\u001b[39m)\u001b[33m,\u001b[39m role\u001b[33m:\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[32m\"role\"\u001b[39m) }))\u001b[33m;\u001b[39m\n \u001b[90m 53 |\u001b[39m   fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m\"capturas/E2E-05-localstorage.json\"\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(ls\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 54 |\u001b[39m   expect(ls\u001b[33m.\u001b[39mrole\u001b[33m,\u001b[39m \u001b[32m\"El rol del editor quedó guardado como: \"\u001b[39m \u001b[33m+\u001b[39m ls\u001b[33m.\u001b[39mrole)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBe(\u001b[32m\"administrador\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 55 |\u001b[39m   expect(ls\u001b[33m.\u001b[39mtoken\u001b[33m,\u001b[39m \u001b[32m\"El JWT queda expuesto en localStorage (riesgo XSS)\"\u001b[39m)\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n \u001b[90m 56 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 57 |\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                        "column": 76,
+                        "line": 54
+                      },
+                      "message": "Error: El rol del editor quedó guardado como: administrador\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"administrador\"\u001b[39m\n\n\u001b[0m \u001b[90m 52 |\u001b[39m   \u001b[36mconst\u001b[39m ls \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m ({ token\u001b[33m:\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[32m\"token\"\u001b[39m)\u001b[33m,\u001b[39m role\u001b[33m:\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[32m\"role\"\u001b[39m) }))\u001b[33m;\u001b[39m\n \u001b[90m 53 |\u001b[39m   fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m\"capturas/E2E-05-localstorage.json\"\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(ls\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 54 |\u001b[39m   expect(ls\u001b[33m.\u001b[39mrole\u001b[33m,\u001b[39m \u001b[32m\"El rol del editor quedó guardado como: \"\u001b[39m \u001b[33m+\u001b[39m ls\u001b[33m.\u001b[39mrole)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBe(\u001b[32m\"administrador\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 55 |\u001b[39m   expect(ls\u001b[33m.\u001b[39mtoken\u001b[33m,\u001b[39m \u001b[32m\"El JWT queda expuesto en localStorage (riesgo XSS)\"\u001b[39m)\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n \u001b[90m 56 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 57 |\u001b[39m\u001b[0m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:54:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:13.020Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-05-Token-y-rol--6c54d-en-localStorage-manipulable-chromium-escritorio/test-failed-1.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-05-Token-y-rol--6c54d-en-localStorage-manipulable-chromium-escritorio/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                    "column": 76,
+                    "line": 54
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-87ec9c10fea6fc936e5a",
+          "file": "atlas.spec.js",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "[E2E-06] Accesibilidad WCAG 2.1 AA en /login",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "status": "failed",
+                  "duration": 2422,
+                  "error": {
+                    "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"color-contrast (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"color-contrast (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127",
+                    "matcherResult": {
+                      "actual": [
+                        "color-contrast (serious, 1 nodos)"
+                      ],
+                      "expected": [],
+                      "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"color-contrast (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                      "name": "toEqual",
+                      "pass": false
+                    },
+                    "location": {
+                      "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                      "column": 127,
+                      "line": 67
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                        "column": 127,
+                        "line": 67
+                      },
+                      "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"color-contrast (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:18.707Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-login-chromium-escritorio/test-failed-1.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-login-chromium-escritorio/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                    "column": 127,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-84afa428e6da8e061641",
+          "file": "atlas.spec.js",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "title": "[E2E-06] Accesibilidad WCAG 2.1 AA en /home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "status": "failed",
+                  "duration": 6821,
+                  "error": {
+                    "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"aria-progressbar-name (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"aria-progressbar-name (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127",
+                    "matcherResult": {
+                      "actual": [
+                        "aria-progressbar-name (serious, 1 nodos)",
+                        "list (serious, 1 nodos)"
+                      ],
+                      "expected": [],
+                      "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"aria-progressbar-name (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                      "name": "toEqual",
+                      "pass": false
+                    },
+                    "location": {
+                      "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                      "column": 127,
+                      "line": 67
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                        "column": 127,
+                        "line": 67
+                      },
+                      "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"aria-progressbar-name (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:21.871Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-home-chromium-escritorio/test-failed-1.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-home-chromium-escritorio/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                    "column": 127,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-484b37156caae207599b",
+          "file": "atlas.spec.js",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "title": "[E2E-06] Accesibilidad WCAG 2.1 AA en /clientes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "status": "failed",
+                  "duration": 11559,
+                  "error": {
+                    "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"button-name (critical, 8 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"button-name (critical, 8 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127",
+                    "matcherResult": {
+                      "actual": [
+                        "button-name (critical, 8 nodos)",
+                        "list (serious, 1 nodos)"
+                      ],
+                      "expected": [],
+                      "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"button-name (critical, 8 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                      "name": "toEqual",
+                      "pass": false
+                    },
+                    "location": {
+                      "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                      "column": 127,
+                      "line": 67
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                        "column": 127,
+                        "line": 67
+                      },
+                      "message": "Error: Violaciones serias/críticas de accesibilidad\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"button-name (critical, 8 nodos)\",\u001b[39m\n\u001b[31m+   \"list (serious, 1 nodos)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n\u001b[0m \u001b[90m 65 |\u001b[39m     fs\u001b[33m.\u001b[39mwriteFileSync(\u001b[32m`capturas/E2E-06-axe-${nombre}.json`\u001b[39m\u001b[33m,\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mstringify(r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m ({ id\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mid\u001b[33m,\u001b[39m impacto\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mimpact\u001b[33m,\u001b[39m descripcion\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mhelp\u001b[33m,\u001b[39m nodos\u001b[33m:\u001b[39m v\u001b[33m.\u001b[39mnodes\u001b[33m.\u001b[39mlength }))\u001b[33m,\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m \u001b[35m2\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mconst\u001b[39m graves \u001b[33m=\u001b[39m r\u001b[33m.\u001b[39mviolations\u001b[33m.\u001b[39mfilter(v \u001b[33m=>\u001b[39m [\u001b[32m\"serious\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"critical\"\u001b[39m]\u001b[33m.\u001b[39mincludes(v\u001b[33m.\u001b[39mimpact))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m     expect(graves\u001b[33m.\u001b[39mmap(v \u001b[33m=>\u001b[39m \u001b[32m`${v.id} (${v.impact}, ${v.nodes.length} nodos)`\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m\"Violaciones serias/críticas de accesibilidad\"\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m\u001b[0m\n    at /home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js:67:127"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:29.503Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-clientes-chromium-escritorio/test-failed-1.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-06-Accesibilidad-WCAG-2-1-AA-en-clientes-chromium-escritorio/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/tests/atlas.spec.js",
+                    "column": 127,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-ec66bffd184b09e86566",
+          "file": "atlas.spec.js",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "title": "[E2E-07] Interfaz responsiva en móvil sin desplazamiento horizontal @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-escritorio",
+              "projectName": "chromium-escritorio",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "status": "passed",
+                  "duration": 570,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:41.890Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-07-Interfaz-res-42559-azamiento-horizontal-compat-chromium-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-7cb8398b673bd795d52f",
+          "file": "atlas.spec.js",
+          "line": 71,
+          "column": 1
+        },
+        {
+          "title": "[E2E-01] Login de administrador y navegación a Clientes @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "tiempo_login_ms",
+                  "description": "4662"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "firefox-escritorio",
+              "projectName": "firefox-escritorio",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "status": "passed",
+                  "duration": 10621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:42.958Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-01-Login-de-adm-fceee-avegación-a-Clientes-compat-firefox-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-9a233bdc593246627102",
+          "file": "atlas.spec.js",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "[E2E-07] Interfaz responsiva en móvil sin desplazamiento horizontal @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-escritorio",
+              "projectName": "firefox-escritorio",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "status": "passed",
+                  "duration": 716,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:53.916Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-07-Interfaz-res-42559-azamiento-horizontal-compat-firefox-escritorio/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-6e80dae3ff54f4234765",
+          "file": "atlas.spec.js",
+          "line": 71,
+          "column": 1
+        },
+        {
+          "title": "[E2E-01] Login de administrador y navegación a Clientes @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "tiempo_login_ms",
+                  "description": "4882"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-movil",
+              "projectName": "webkit-movil",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "status": "passed",
+                  "duration": 11584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:02:55.450Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-01-Login-de-adm-fceee-avegación-a-Clientes-compat-webkit-movil/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-5b1cfc441b6e2a93733a",
+          "file": "atlas.spec.js",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "[E2E-07] Interfaz responsiva en móvil sin desplazamiento horizontal @compat",
+          "ok": true,
+          "tags": [
+            "compat"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-movil",
+              "projectName": "webkit-movil",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "status": "passed",
+                  "duration": 1574,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T18:03:07.389Z",
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/Sistema-de-Gestion-Atlas/Sistema-de-Gestion-Atlas/qa/e2e/test-results/atlas--E2E-07-Interfaz-res-42559-azamiento-horizontal-compat-webkit-movil/test-finished-1.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b081a440326219b9d8ba-cf76ecc3e74f1e7415b5",
+          "file": "atlas.spec.js",
+          "line": 71,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T18:01:32.750Z",
+    "duration": 96270.98700000001,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}
